@@ -1,11 +1,12 @@
 const express = require('express')
 const { check, validationResult } = require('express-validator/check');
 const bcrypt = require('bcrypt');
-const passport = require('passport')
+const passport2 = require('passport')
+const ClientService = require('../API/ClientService');
 let router = express.Router();
 
 // Using Client config //
-require('../config/clientpassport')(passport)
+require('../config/clientpassport')(passport2)
 // ------------------- //
 
 // Setting Knex server //
@@ -17,13 +18,23 @@ const knex = require('knex')({
         password: process.env.DB_PASSWORD
     }
 });
+let clientService = new ClientService(knex);
 // ------------------ //
 
-// Client index page (may not use)//
+// Client index page //
+  // **** 1 should change to req.user.id later
 router.get('/', (req, res) => {
-    res.send('This is client index page')
+    clientService.listindex(1).then(function(result){
+        res.render('test', {data: result})
+    })
 })
 // ------------------- //
+
+router.get('/shop/:id', (req,res) =>{
+    clientService.listdetails(req.params.id).then(function(result){
+        res.send(result)
+    })
+})
 
 // Success page for testing //
 router.get('/success', (req, res) => {
@@ -33,7 +44,7 @@ router.get('/success', (req, res) => {
 
 // Client login //
 router.post('/login',
-    passport.authenticate('client-local', { failureRedirect: '/' }),
+    passport2.authenticate('client-local', { failureRedirect: '/' }),
     function (req, res, next) {
         res.redirect('/client/success');
     });
@@ -69,13 +80,14 @@ router.post('/register', [
                                     return;
                                 }
 
-
                                 user.password = hash;
                                 // make sure all the user have 0 credit when they register
                                 user.credit = 0
                                 knex('clientinfo').insert(user).then((result) =>
                                     console.log(req.body) //show stored result
-                                ).then((result)=>{res.send('hi')}).catch((err => {
+                                )
+                                .then((result)=>{res.send('hi')})
+                                .catch((err => {
                                     console.log(err);
                                     res.send(err)
                                 }))
@@ -90,5 +102,11 @@ router.post('/register', [
             return;
         })
 // ---------------- //
+
+// No this page //
+router.get('*', (req, res) => {
+    res.send('No this page!')
+})
+// ------------ //
 
 module.exports = router;

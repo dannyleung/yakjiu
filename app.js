@@ -4,12 +4,18 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const passport = require('passport')
 const app = express();
+const hb = require('express-handlebars');
+
 require('dotenv').config();
 
 // Middleware //
 app.use(bodyParser.urlencoded({ extended: false }))
 // --------- //
 
+// View engine //
+app.engine('handlebars', hb({ defaultLayout: 'main' }));
+app.set('view engine', 'handlebars');
+// ---------- //
 
 // Session setting //
 app.use(session({
