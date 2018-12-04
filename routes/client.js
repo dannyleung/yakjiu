@@ -21,20 +21,36 @@ const knex = require('knex')({
 let clientService = new ClientService(knex);
 // ------------------ //
 
+// Check auth //
+function authCheck(req,res,next){
+    if (req.isAuthenticated()) {
+        if (req.user.credit != undefined){
+            return next();
+        } else {
+            res.send('please logout and login as a client again')
+        }
+    } else {
+        res.send('please login')
+    }
+}
+// --------- //
+
 // Client index page //
-  // **** 1 should change to req.user.id later
-router.get('/', (req, res) => {
-    clientService.listindex(1).then(function(result){
-        res.render('test', {data: result})
+router.get('/', authCheck, (req, res) => {
+    clientService.listindex(req.user.id).then(function(result){
+        console.log(req.user)
+        res.render('test', {data: result, name:req.user.username})
     })
 })
 // ------------------- //
 
-router.get('/shop/:id', (req,res) =>{
+// Shop info details // (Need to check id is match with owner later)
+router.get('/shop/:id', authCheck, (req,res) =>{
     clientService.listdetails(req.params.id).then(function(result){
         res.send(result)
     })
 })
+// ---------------- //
 
 // Success page for testing //
 router.get('/success', (req, res) => {
@@ -44,9 +60,9 @@ router.get('/success', (req, res) => {
 
 // Client login //
 router.post('/login',
-    passport2.authenticate('client-local', { failureRedirect: '/' }),
+    passport2.authenticate('client-local', { failureRedirect: '/client/loginerror' }),
     function (req, res, next) {
-        res.redirect('/client/success');
+        res.redirect('/client/');
     });
 // ------------ //
 
@@ -103,10 +119,17 @@ router.post('/register', [
         })
 // ---------------- //
 
-// No this page //
+// Logout page //
+router.get('/logout', function(req, res){
+    req.logout();
+    res.send('You have already logout');
+  });
+// --------- //
+
+// No this page (must place at bottom) //
 router.get('*', (req, res) => {
     res.send('No this page!')
 })
-// ------------ //
+// ----------------------------------- //
 
 module.exports = router;

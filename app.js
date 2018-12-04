@@ -43,7 +43,8 @@ app.use('/client', client)
 
 // Landingpage setting //
 app.get('/', (req, res) => {
-    res.send('This is main landing page')
+    // res.send('This is main landing page')
+    res.render('logintest')
 })
 // ------------------ //
 

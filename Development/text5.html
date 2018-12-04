@@ -21,7 +21,6 @@
 
 
 <body data-spy='scroll' data-target='.navbar' data-offset='50'>
-
     <nav class="navbar navbar-default navbar-expand-lg navbar-light fixed-top">
         <a class="navbar-brand" href="#topPage"><img class='logo' src="img/logo.png">Welcome to JakYiu</a>
         
@@ -60,7 +59,7 @@
 
     
         <!-- BEGIN # MODAL LOGIN -->
-<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="login-modal-client" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     	<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header" align="center">
@@ -74,7 +73,7 @@
                 <div id="div-forms">
                 
                     <!-- Begin # Login Form -->
-                    <form id="login-form">
+                    <form id="login-form-client" action="/action_page.php" method="post">
 		                <div class="modal-body">
 				    		<div id="div-login-msg">
                                 <div id="icon-login-msg" class="glyphicon glyphicon-chevron-right"></div>
@@ -153,8 +152,8 @@
     <!-- END # MODAL LOGIN -->
 
 
-            <a href="#" class="btn btn-primary btn-x1 page-scroll" role="button" data-toggle="modal" data-target="#login-modal">Client</a>
-            <a href="#" class="btn btn-primary btn-x1 page-scroll" role="button" data-toggle="modal" data-target="#login-modal">Shopper</a>
+            <a href="#" class="btn btn-primary btn-x1 page-scroll" role="button" data-toggle="modal" data-target="#login-modal-client">Client</a>
+            <a href="#" class="btn btn-primary btn-x1 page-scroll" role="button" data-toggle="modal" data-target="#login-modal-shopper">Shopper</a>
         </div>
     </div>
 </header>
