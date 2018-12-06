@@ -2,8 +2,7 @@
     <h2>Welcome! <span style="color: red">{{name}}</span></h2><a href='/client/logout/'><Span>Logout</Span></a>
     <p>Just a testing for showing the client shop info</p>
     <p><strong>Total Shop info:</strong> {{data.length}}</p>
-    <div class="card-deck">
-            <div class="row">
+    <div class="row">
     {{#if data}}
     {{#each data}}
     <div class="col-lg-4">
@@ -22,7 +21,6 @@
     {{else}}
     <p class="text-danger">You don't have any shopinfo! let's make one!</p>
     {{/if}}
-        </div>
     </div>
 
 </div>
