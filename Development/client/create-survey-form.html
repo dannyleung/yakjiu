@@ -15,6 +15,7 @@
 
     <!-- CUSTOM CSS -->
     <link rel="stylesheet" href="../test5.css" type="text/css">
+    <link rel="stylesheet" href="client-register.css" type="text/css">
     
 
 </head>
@@ -50,81 +51,204 @@
 <br>
 <br>
 
-    <form>
-        <div><h1>Survey Creation Form</h1></div>
 
-        <!-- START NAME OF SURVEY -->
-        <div class="form-group">
-                <label for="exampleFormControlTextarea1">ENTER NAME OF SURVEY</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
+<!-- START OF FORM -->
+<div class="container">
+    <h1>Survey Creation Form</h1>
+    <div class="col-lg-12 ">
+
+
+        <div class="row">
+            <form>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label>Survey Name</label>
+                        <input type="text" placeholder="Enter Survey Name Here.." class="form-control">
+                    </div>
+			
+                    <div class="form-group">
+                        <label>Instructions</label>
+                        <textarea placeholder="Enter Survey Instructions Here.." rows="3" class="form-control"></textarea>
+                    </div>	
+
+                    <div class="form-group">
+                        <label>Short Answer Question</label>
+                        <input type="text" placeholder="Enter Short Answer Question Here.." class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Multiple Choice Question</label>
+                        <input type="text" placeholder="Enter Multiple Question Here.." class="form-control">
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="MC1" class="col-sm-2 col-form-label">1st Choice</label>
+                        <div class="col-sm-10">
+                            <input type="text" placeholder="Enter 1st Choice Here.." class="form-control">
+                        </div>
+                        <label for="MC2" class="col-sm-2 col-form-label">2nd Choice</label>
+                        <div class="col-sm-10">
+                            <input type="text" placeholder="Enter 2nd Choice Here.." class="form-control">
+                        </div>
+                        <label for="MC3" class="col-sm-2 col-form-label">3rd Choice</label>
+                        <div class="col-sm-10">
+                            <input type="text" placeholder="Enter 3rd Choice Here.." class="form-control">
+                        </div>
+                        <label for="MC4" class="col-sm-2 col-form-label">4th Choice</label>
+                        <div class="col-sm-10">
+                            <input type="text" placeholder="Enter 4th Choice Here.." class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Multiple Answer Question</label>
+                        <input type="text" placeholder="Enter Multiple Question Here.." class="form-control">
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="MA1" class="col-sm-2 col-form-label">1st Answer</label>
+                        <div class="col-sm-10">
+                            <input type="text" placeholder="Enter 1st Answer Here.." class="form-control">
+                        </div>
+                        <label for="MA2" class="col-sm-2 col-form-label">2nd Answer</label>
+                        <div class="col-sm-10">
+                            <input type="text" placeholder="Enter 2nd Answer Here.." class="form-control">
+                        </div>
+                        <label for="MA3" class="col-sm-2 col-form-label">3rd Answer</label>
+                        <div class="col-sm-10">
+                            <input type="text" placeholder="Enter 3rd Answer Here.." class="form-control">
+                        </div>
+                        <label for="MA4" class="col-sm-2 col-form-label">4th Answer</label>
+                        <div class="col-sm-10">
+                            <input type="text" placeholder="Enter 4th Answer Here.." class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Photo Instructions</label>
+                        <input type="text" placeholder="Describe what type of photo to upload..." class="form-control">
+                    </div>
+
+                </div>				
+            </form> 
         </div>
-        <!-- END NAME OF SURVEY -->
+    </div>
+</div>
+<!-- END OF FORM -->
+    
 
-        <!-- START DESCRIPTION & INSTRUCTIONS -->
-        <div class="form-group">
-                <label for="exampleFormControlTextarea1">ENTER DESCRIPTION & INSTRUCTIONS</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- START OF FORM -->
+<div class="container">
+    <h1 class="well">Survey Creation Form</h1>
+    <div class="col-lg-12 well">
+        <div class="row">
+            <form>
+                    <div class="col-sm-12">
+                <!-- START NAME OF SURVEY -->
+                <div class="form-group">
+                        <label for="exampleFormControlTextarea1">ENTER NAME OF SURVEY</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
+                </div>
+                <!-- END NAME OF SURVEY -->
+        
+                <!-- START DESCRIPTION & INSTRUCTIONS -->
+                <div class="form-group">
+                        <label for="exampleFormControlTextarea1">ENTER DESCRIPTION & INSTRUCTIONS</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+                <!-- END DESCRIPTION & INSTRUCTIONS -->
+        
+                <!-- START SHORT ANSWER -->
+                <div class="form-group">
+                        <label for="exampleFormControlTextarea1">ENTER QUESTION FOR SHORT ANSWER</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
+                </div>
+                <!-- END SHORT ANSWER -->
+        
+                <!-- START MULTIPLE CHOICE -->
+                <div class="form-group">
+                        <label for="exampleFormControlTextarea1">ENTER QUESTION/WORDING FOR MULTIPLE CHOICE</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
+        
+                        <label for="exampleFormControlTextarea1">MULTIPLE CHOICE TEXT1</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
+        
+                        <label for="exampleFormControlTextarea1">MULTIPLE CHOICE TEXT2</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
+        
+                        <label for="exampleFormControlTextarea1">MULTIPLE CHOICE TEXT3</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
+        
+                        <label for="exampleFormControlTextarea1">MULTIPLE CHOICE TEXT4</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
+        
+                        <label for="exampleFormControlTextarea1">MULTIPLE CHOICE TEXT5</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
+                </div>
+                <!-- END MULTIPLE CHOICE -->
+        
+                <!-- START MULTIPLE ANSWER -->
+                <div class="form-group">
+                        <label for="exampleFormControlTextarea1">ENTER QUESTION/WORDING FOR MULTIPLE ANSWER</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
+        
+                        <label for="exampleFormControlTextarea1">MULTIPLE ANSWER TEXT1</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
+        
+                        <label for="exampleFormControlTextarea1">MULTIPLE ANSWER TEXT2</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
+        
+                        <label for="exampleFormControlTextarea1">MULTIPLE ANSWER TEXT3</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
+        
+                        <label for="exampleFormControlTextarea1">MULTIPLE ANSWER TEXT4</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
+        
+                        <label for="exampleFormControlTextarea1">MULTIPLE ANSWER TEXT5</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
+                </div>
+                <!-- END MULTIPLE ANSWER -->
+        
+                <!-- START UPLOAD PHOTO -->
+                <div class="form-group">
+                        <label for="exampleFormControlTextarea1">A PHOTO OF WHAT TO UPLOAD</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
+                </div>
+                <!-- END OF UPLOAD PHOTO -->
+                </div>
+            </form>
         </div>
-        <!-- END DESCRIPTION & INSTRUCTIONS -->
+    </div>
+</div>
+    <!-- END OF FORM -->
 
-        <!-- START SHORT ANSWER -->
-        <div class="form-group">
-                <label for="exampleFormControlTextarea1">ENTER QUESTION FOR SHORT ANSWER</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
-        </div>
-        <!-- END SHORT ANSWER -->
 
-        <!-- START MULTIPLE CHOICE -->
-        <div class="form-group">
-                <label for="exampleFormControlTextarea1">ENTER QUESTION/WORDING FOR MULTIPLE CHOICE</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
 
-                <label for="exampleFormControlTextarea1">MULTIPLE CHOICE TEXT1</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
-
-                <label for="exampleFormControlTextarea1">MULTIPLE CHOICE TEXT2</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
-
-                <label for="exampleFormControlTextarea1">MULTIPLE CHOICE TEXT3</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
-
-                <label for="exampleFormControlTextarea1">MULTIPLE CHOICE TEXT4</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
-
-                <label for="exampleFormControlTextarea1">MULTIPLE CHOICE TEXT5</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
-        </div>
-        <!-- END MULTIPLE CHOICE -->
-
-        <!-- START MULTIPLE ANSWER -->
-        <div class="form-group">
-                <label for="exampleFormControlTextarea1">ENTER QUESTION/WORDING FOR MULTIPLE ANSWER</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
-
-                <label for="exampleFormControlTextarea1">MULTIPLE ANSWER TEXT1</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
-
-                <label for="exampleFormControlTextarea1">MULTIPLE ANSWER TEXT2</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
-
-                <label for="exampleFormControlTextarea1">MULTIPLE ANSWER TEXT3</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
-
-                <label for="exampleFormControlTextarea1">MULTIPLE ANSWER TEXT4</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
-
-                <label for="exampleFormControlTextarea1">MULTIPLE ANSWER TEXT5</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
-        </div>
-        <!-- END MULTIPLE ANSWER -->
-
-        <!-- START UPLOAD PHOTO -->
-        <div class="form-group">
-                <label for="exampleFormControlTextarea1">A PHOTO OF WHAT TO UPLOAD</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
-        </div>
-        <!-- END OF UPLOAD PHOTO -->
-    </form>
+    
 
 
     <form>
@@ -186,7 +310,7 @@
 
     </form>
 
-    <a href="#about" class="btn btn-secondary btn-xl page-scroll">BACK</a>
+    <a href="#about" class="btn btn-secondary btn-xl page-scroll">CANCEL</a>
     <a href="#about" class="btn btn-secondary btn-xl page-scroll">PREVIEW</a>
 
 <!-- Latest compiled and minified Jquery -->
