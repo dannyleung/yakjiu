@@ -153,7 +153,8 @@ hr.whiteDash {
     width: 100%;
     padding: 100px 15px;
     text-align: center;
-    background-color: #ffffffda;
+    /* background-color: #ffffffda; */
+    background-image: linear-gradient(#4948118e, #ffffff);
 }
 
 h2 {
