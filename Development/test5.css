@@ -51,6 +51,19 @@ p {
     border: 0;
 }
 
+.import-button {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+  }
+
+.import-button input[type=file] {
+font-size: 100px;
+position: absolute;
+left: 0;
+top: 0;
+opacity: 0;
+}
 /* SECTIONS */
 
 header {
