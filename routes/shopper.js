@@ -2,11 +2,23 @@ const express = require('express')
 const { check, validationResult } = require('express-validator/check');
 const bcrypt = require('bcrypt');
 const passport = require('passport')
+const nodemailer = require('nodemailer');
 let router = express.Router();
+
 
 // Using Shopper config //
 require('../config/shopperpassport')(passport)
 // ------------------- //
+
+// Email setting //
+const mailTransport = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD
+    }
+});
+// ------------- //
 
 // Setting Knex server //
 const knex = require('knex')({
@@ -73,10 +85,26 @@ router.post('/register', [
                                 user.password = hash;
                                 // make sure all the user have 0 balance when they register
                                 user.balance = 0
-                                
-                                knex('shopperinfo').insert(user).then((result) =>
-                                    console.log(result), //show stored result
-                                    res.send('Reg ok!')
+
+                                knex('shopperinfo').insert(user).then((result) => {
+                                    console.log(result) //show stored result
+                                    
+                                    mailTransport.sendMail({
+                                        from: 'Yakjiu Customer service <yakjiu.com.hk@gmail.com>',
+                                        to: 'toomanychung <toomanychung@gmail.com>',
+                                        subject: 'Thank you for being our Shopper!',
+                                        html: `<h1>Hello NEW USER: ${user.username} </h1><p>Nice to meet you ARRRR.</p>`
+                                    }, function (err) {
+
+                                        if (err) {
+                                            console.log('Unable to send email: ' + err);
+                                        } 
+
+                                    });
+
+                                    res.send('Shopper Reg success!')
+
+                                }
                                 ).catch((err => {
                                     // console.log(err);
                                     res.send('Cannot reg')
@@ -92,5 +120,30 @@ router.post('/register', [
             return;
         })
 // ---------------- //
+
+// Shopper forget password (Email) //
+router.get('/resetpasswordemail', (req,res)=>{
+
+    res.render('empty', {layout:"emailreset"}, function(err, html){
+        if(err){
+            console.log('error in email template')
+        }
+
+        mailTransport.sendMail({
+            from: '"Yakjiu Customer service <yakjiu.com.hk@gmail.com>',
+            to: 'toomanychung <toomanychung@gmail.com>',
+            subject: 'Yakjiu password reset',
+            html: html
+          }, function(err) {
+            if(err) {
+              console.error('Unable to send reset email: ' + err.stack)
+            };
+          });
+
+    })
+
+    res.send('testing Email sent')
+})
+// ------------------------------ //
 
 module.exports = router;
