@@ -45,7 +45,7 @@ router.get('/success', (req, res) => {
 
 // Shopper login //
 router.post('/login',
-    passport.authenticate('shopper-local', { failureRedirect: '/' }),
+    passport.authenticate('shopper-local', { failureRedirect: '/#login' }),
     function (req, res, next) {
         res.redirect('/shopper/success');
     });

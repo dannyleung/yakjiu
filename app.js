@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // --------- //
 
 // View engine //
-app.engine('handlebars', hb({ defaultLayout: 'main' }));
+app.engine('handlebars', hb({ defaultLayout: 'clientmain' }));
 app.set('view engine', 'handlebars');
 // ---------- //
 
@@ -43,8 +43,8 @@ app.use('/client', client)
 
 // Landingpage setting //
 app.get('/', (req, res) => {
-    // res.send('This is main landing page')
-    res.render('logintest')
+    // res.render('logintest')
+    res.render('empty',{layout:"landing"})
 })
 // ------------------ //
 
@@ -54,3 +54,10 @@ app.listen(process.env.PORT, (req, res) => {
     console.log(`Sever started on port ${process.env.PORT}!!`)
 })
 // ------------------------ //
+
+// ** Testing only //
+app.get('/test', (req, res) => {
+    // res.render('logintest')
+    res.render('test',{layout:"clientmain"})
+})
+// --------------- //

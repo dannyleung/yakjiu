@@ -1,0 +1,254 @@
+<!-- Breadcrumbs-->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/client">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item active">Createshop</li>
+</ol>
+
+<div class="container">
+    <h1 style="font-size:2rem;">Survey Creation Form</h1>
+    <form action="/client/newshop" method="post" id="createshop">
+        <div class="col-lg-12">
+            <div class="row">
+                <!-- 1ST COLUMN (LEFT SIDE OF FORM) -->
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Instructions (No more than 200 words)</label>
+                        <textarea placeholder="Enter Survey Instructions Here.." rows="3" maxlength="200" class="form-control"
+                            name="description" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Short Answer Question</label>
+                        <input required type="text" placeholder="Enter Short Answer Question Here.." class="form-control"
+                            name="question1" maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <label>Multiple Choice Question</label>
+                        <input type="text" placeholder="Enter Multiple Question Here.." class="form-control" name="question2"
+                            maxlength="50" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Enter 1st Choice Here.." class="form-control" name="question2a"
+                            required>
+                        <input type="text" placeholder="Enter 2nd Choice Here.." class="form-control" name="question2b"
+                            required>
+                        <input type="text" placeholder="Enter 3rd Choice Here.." class="form-control" name="question2c"
+                            required>
+                        <input type="text" placeholder="Enter 4th Choice Here.." class="form-control" name="question2d"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label>Multiple Answer Question</label>
+                        <input type="text" placeholder="Enter Multiple Question Here.." class="form-control" name="question3"
+                            maxlength="50" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Enter 1st Answer Here.." class="form-control" name="question3a"
+                            required>
+                        <input type="text" placeholder="Enter 2nd Answer Here.." class="form-control" name="question3b"
+                            required>
+                        <input type="text" placeholder="Enter 3rd Answer Here.." class="form-control" name="question3c"
+                            required>
+                        <input type="text" placeholder="Enter 4th Answer Here.." class="form-control" name="question3d"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label>Photo Instructions</label>
+                        <input type="text" placeholder="Describe what type of photo to upload..." class="form-control"
+                            name="question4" maxlength="50" required>
+                    </div>
+                </div>
+
+                <!-- 2ND COLUMN (LEFT SIDE OF FORM) -->
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Shop Name</label>
+                        <input type="text" placeholder="Enter Shop Name Here.." class="form-control" name="shopname"
+                            maxlength="20" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Shop Location</label>
+                        <input type="text" placeholder="Enter Shop Address Here.." class="form-control" name="address"
+                            maxlength="50" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Startdate</label>
+                        <input type="date" placeholder="Select start date" class="form-control" name="startdate"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label>Enddate</label>
+                        <input type="date" placeholder="Select end date" class="form-control" name="enddate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Quota (Max:20)</label>
+                        <input type="number" min="1" max="20" placeholder="Enter Maxium shopper quota for this shop.."
+                            class="form-control" name="quota" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Reimbursement Amount For Each Shopper (Maxium: 100HKD)</label>
+                        <input type="number" min="1" max="100" placeholder="Enter Reimbursement Amount Here.." class="form-control"
+                            name="credit" required>
+                    </div>
+                    <input type="Reset" value="RESET" class="btn btn-secondary btn-xl page-scroll"></input>
+                    <input type="submit" value="PREVIEW" class="btn btn-secondary btn-xl page-scroll" id="preview">
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="col-lg-12" id="previewform" style="display: none">
+        <b>Please check all the details had been enter correctly</b>
+        <p class="my-3 text-secondary">Instructions:
+            <p id="preview-instructions" />
+        </p>
+        <p class="my-3 text-secondary">Short Answer Question:
+            <p id="preview-shortanswer" />
+        </p>
+        <p class="my-3 text-secondary">Multiple Choice Question:
+            <p id="preview-multiplechoice" />
+        </p>
+        <ul class="list-inline">
+            <li class="list-inline-item" id="preview-multiplechoice-a"></li>
+            <li class="list-inline-item" id="preview-multiplechoice-b"></li>
+            <li class="list-inline-item" id="preview-multiplechoice-c"></li>
+            <li class="list-inline-item" id="preview-multiplechoice-d"></li>
+        </ul>
+        <p class="my-3 text-secondary">Multiple Answer Question:
+            <p id="preview-multipleanswer" />
+        </p>
+        <ul class="list-inline">
+            <li class="list-inline-item" id="preview-multipleanswer-a"></li>
+            <li class="list-inline-item" id="preview-multipleanswer-b"></li>
+            <li class="list-inline-item" id="preview-multipleanswer-c"></li>
+            <li class="list-inline-item" id="preview-multipleanswer-d"></li>
+        </ul>
+        <p class="my-3 text-secondary">Photo Instructions:
+            <p id="preview-photoinstruction" />
+        </p>
+        <p class="my-3 text-secondary">Shop Name:
+            <p id="preview-shopname" />
+        </p>
+        <p class="my-3 text-secondary">Shop Location:
+            <p id="preview-shoplocation" />
+        </p>
+        <p class="my-3 text-secondary">Startdate:
+            <p id="preview-startdate" />
+        </p>
+        <p class="my-3 text-secondary">Enddate:
+            <p id="preview-enddate" />
+        </p>
+        <p class="my-3 text-secondary">Quota:
+            <p id="preview-quota" />
+        </p>
+        <p class="my-3 text-secondary">Reimbursement Amount For Each Shopper:
+            <p id="preview-salary" />
+        </p>
+        <p class="my-3 text-danger">Expect Credit cost:
+            <b id="preview-expectcost" />
+        </p>
+        <input type="submit" value="EDIT" class="btn btn-primary btn-xl page-scroll" id="edit">
+        <input type="submit" value="SUBMIT" class="btn btn-danger btn-xl page-scroll" id="submit">
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("form").on('submit', function (e) {
+            e.preventDefault();
+            $("form").hide();
+            $("#previewform").show();
+            preview()
+            $("form").off('submit');
+        })
+
+        $('#submit').on('click', function (e) {
+            e.preventDefault();
+            $("form").submit();
+        })
+
+        $('preview').on('click', function (e) {
+            e.preventDefault();
+            if (!validateForm()) {
+                $("form").hide();
+                $("#previewform").show();
+                preview()
+            } else {
+                alert(`Amend your form!!`)
+            }
+        });
+
+        $('#edit').on('click', function (e) {
+            e.preventDefault();
+            $("form").on('submit', function (e) {
+                e.preventDefault();
+                $("form").hide();
+                $("#previewform").show();
+                preview()
+                $("form").off('submit');
+            })
+            $("#previewform").hide();
+            $("form").show();
+        });
+
+        function DoPrevent(e) {
+            e.preventDefault();
+        }
+
+        function preview() {
+            $("#preview-instructions").text($("textarea[name='description']").val());
+            $("#preview-shortanswer").text($("input[name='question1']").val());
+            $("#preview-multiplechoice").text($("input[name='question2']").val());
+            $("#preview-multiplechoice-a").text($("input[name='question2a']").val());
+            $("#preview-multiplechoice-b").text($("input[name='question2b']").val());
+            $("#preview-multiplechoice-c").text($("input[name='question2c']").val());
+            $("#preview-multiplechoice-d").text($("input[name='question2d']").val());
+            $("#preview-multipleanswer").text($("input[name='question3']").val());
+            $("#preview-multipleanswer-a").text($("input[name='question3a']").val());
+            $("#preview-multipleanswer-b").text($("input[name='question3b']").val());
+            $("#preview-multipleanswer-c").text($("input[name='question3c']").val());
+            $("#preview-multipleanswer-d").text($("input[name='question3d']").val());
+            $("#preview-photoinstruction").text($("input[name='question4']").val());
+            $("#preview-shopname").text($("input[name='shopname']").val());
+            $("#preview-shoplocation").text($("input[name='address']").val());
+            $("#preview-startdate").text($("input[name=startdate]").val());
+            $("#preview-enddate").text($("input[name=enddate]").val());
+            $("#preview-quota").text($("input[name='quota']").val());
+            $("#preview-salary").text($("input[name='credit']").val());
+            $("#preview-expectcost").text($("input[name='credit']").val() * $("input[name='quota']").val());
+        }
+
+        function validateForm() {
+            var isValid = true;
+            $('form#createshop').find('input[type=text],input[type=date],input[type=number],textarea').each(function () {
+                if ($(this).val() === '') {
+                    isValid = false;
+                }
+            });
+            return isValid;
+        }
+
+    });
+
+    //
+
+    var date = new Date();
+
+    var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
+
+    if (month < 10) month = "0" + month;
+    if (day < 10) day = "0" + day;
+    if (month = 12) {
+        let month = 1;
+        if (month < 10) month = "0" + month;
+        let year = date.getFullYear() + 1;
+        var nextmonth = year + "-" + month + "-" + day;
+    }
+
+    var today = year + "-" + month + "-" + day;
+    $('input[name=startdate]').val(today)
+    $('input[name=enddate]').val(nextmonth)
+
+</script>

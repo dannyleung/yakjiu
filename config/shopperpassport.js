@@ -54,7 +54,7 @@ passport.serializeUser(function (user, done) {
 
 passport.deserializeUser(async (session, done) => {
     if (session.type == 'client') {
-        console.log("Logined user is client")
+        // console.log("Logined user is client")
         let users = await knex('clientinfo').where({ id: session.id });
         if (users.length == 0) {
             return done(new Error(`Wrong user id: ${session.id}`))
@@ -62,7 +62,7 @@ passport.deserializeUser(async (session, done) => {
         let user = users[0];
         return done(null, user)
     } else {
-        console.log("Logined user is shopper")
+        // console.log("Logined user is shopper")
         let users = await knex('shopperinfo').where({ id: session.id });
         if (users.length == 0) {
             return done(new Error(`Wrong user id: ${session.id}`))
