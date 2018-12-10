@@ -20,17 +20,6 @@ const mailTransport = nodemailer.createTransport({
   });
 // ------------- //
 
-// mailTransport.sendMail({
-//     from: 'Yakjiu Customer service <yakjiu.com.hk@gmail.com>',
-//     to: 'toomanychung <toomanychung@gmail.com>',
-//     subject: 'Thank you for being our client!',
-//     html: '<h1>Hello</h1><p>Nice to meet you.</p>'
-//   }, function(err){
-//     if(err) {
-//       console.log('Unable to send email: ' + err);
-//     }
-// });
-
 // Setting Knex server //
 const knex = require('knex')({
     client: 'postgresql',
@@ -52,7 +41,7 @@ function authCheck(req, res, next) {
             res.send('please logout and login as a client again')
         }
     } else {
-        res.send('please login')
+        res.redirect('../#login')
     }
 }
 // --------- //
@@ -60,8 +49,7 @@ function authCheck(req, res, next) {
 // Client index page //
 router.get('/', authCheck, (req, res) => {
     clientService.listindex(req.user.id).then(function (result) {
-        console.log(req.user)
-        res.render('test', { data: result, name: req.user.username })
+        res.render('test', { data: result, name: req.user.username, currentCredit: req.user.credit })
     })
 })
 // ------------------- //
@@ -69,7 +57,13 @@ router.get('/', authCheck, (req, res) => {
 // Shop info details // (Need to check id is match with owner later)
 router.get('/shop/:id', authCheck, (req, res) => {
     clientService.listdetails(req.params.id).then(function (result) {
-        res.send(result)
+
+        if(result.length < 1 ||req.user.id != result[0]._clientid || req.user.credit == undefined){
+            res.send('Dont be evil')
+        } else {
+            res.send(result)        
+        }
+
     })
 })
 // ---------------- //
@@ -143,19 +137,29 @@ router.post('/register', [
 
 // Crete new shop //
 router.post('/newshop', [
-    check('shopname', 'Shopname cannot be too short or too long').isLength({ min: 1, max: 20 }),
+    check('shopname', 'Shopname cannot be too short or too long').isLength({ min: 1, max: 50 }),
     check('quota', 'invalid quota').isInt({ min: 1, max: 20 }),
     check('credit', 'invalid credit').isInt({ min: 1, max: 100 })], function (req, res) {
 
         const errors = validationResult(req);
-        req.body._clientid = 1 // temporary set
-        // *** later change this >>> req.body._clientid = req.user.id
+        req.body._clientid = req.user.id
+        req.body.question2 = [req.body.question2,req.body.question2a,req.body.question2b,req.body.question2c,req.body.question2d]
+        req.body.question3 = [req.body.question3,req.body.question3a,req.body.question3b,req.body.question3c,req.body.question3d]
+        delete req.body.question2a;
+        delete req.body.question2b;
+        delete req.body.question2c;
+        delete req.body.question2d;
+        delete req.body.question3a;
+        delete req.body.question3b;
+        delete req.body.question3c;
+        delete req.body.question3d;
+        console.log(req.body)
 
         if (!errors.isEmpty()) {
             console.log(errors.array())
             res.send('Problem: ' + errors.array()[0].msg)
             // res.render('users/register', { errors: errors.array() })
-        } else if (req.body._clientid == undefined) {
+        } else if (req.body._clientid == undefined || req.user == undefined) {
             //** change to req.user == undefined ||  */
             //check if user id exist
             res.send('Your client id is invalid')
@@ -167,13 +171,13 @@ router.post('/newshop', [
                 let consumeCredit = req.body.quota * req.body.credit
 
                 if (consumeCredit > currentCredit) {
-                    res.send(`You don't have enough credit to make new shop`)
+                    res.render('success', {msg:`You don't have enough credit to make new shop`, currentCredit: req.user.credit})
                 } else {
                     clientService.createNewShop(req.body, (err) => {
                         if (err) {
                             res.send('Error' + err)
                         } else {
-                            res.send(`You've already created a new shop!!`)
+                            res.render('success', {msg:`You've already created a new shop!!`, currentCredit: req.user.credit})
                         }
                     })
                 }
@@ -184,16 +188,24 @@ router.post('/newshop', [
     })
 // -------------- //
 
+// Createshop page (GET)//
+router.get('/createshop', authCheck, (req, res) => {
+    res.render('createshop', {currentCredit: req.user.credit})
+})
+// --------------- //
+
+
 // Logout page //
 router.get('/logout', function (req, res) {
     req.logout();
-    res.send('You have already logout');
+    res.redirect('/');
 });
 // --------- //
 
+
 // No this page (must place at bottom) //
-router.get('*', (req, res) => {
-    res.send('No this page!')
+router.get('*', authCheck, (req, res) => {
+    res.render('404', {currentCredit: req.user.credit})
 })
 // ----------------------------------- //
 
