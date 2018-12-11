@@ -1,0 +1,70 @@
+<!-- Breadcrumbs-->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/shopper">Index</a>
+    </li>
+    <li class="breadcrumb-item active">Joblist</li>
+</ol>
+
+<!-- DataTables Example -->
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fas fa-table"></i>
+        Available Job List</div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Shopname</th>
+                        <th>Address</th>
+                        <th>Salary</th>
+                        <th>Start date</th>
+                        <th>End date</th>
+                        <th>Quota</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Shopname</th>
+                        <th>Address</th>
+                        <th>Salary</th>
+                        <th>Start date</th>
+                        <th>End date</th>
+                        <th>Quota</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {{#if data}}
+                    {{#each data}}
+                    <tr>
+                        <td><a href="/shopper/shop/{{id}}">{{shopname}}</a></td>
+                        <td>{{address}}</td>
+                        <td>{{credit}} Banana</td>
+                        <td>{{startdate}}</td>
+                        <td>{{enddate}}</td>
+                        <td>{{quota}}</td>
+                    </tr>
+                    {{/each}}
+                    {{else}}
+
+                    {{/if}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer small text-muted">Last Load <span id="now">now</span></div>
+</div>
+
+<p class="small text-center text-muted my-5">
+    <em>Only 'Live' Shopinfo will be listed above</em>
+</p>
+
+</div>
+<!-- /.container-fluid -->
+
+<script>
+    $(document).ready(function () {
+        $("#now").html(moment().format('lll'))
+    })
+</script>
