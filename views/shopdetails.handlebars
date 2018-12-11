@@ -1,0 +1,118 @@
+<!-- Breadcrumbs-->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/client">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item active">Shopdetail {{data.0.id}}</li>
+</ol>
+
+<div class="container">
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-chart-area"></i>
+            Shop details</div>
+        <div class="card-body">
+            {{#each data}}
+            <p><b>Shopname</b>: {{shopname}}</p>
+            <p><b>Adress</b>: {{address}}</p>
+            <iframe width="700" height="350" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDv4CRmZJHubErg1C_0xxR7yqTBspZouWU&q={{address}}"
+                allowfullscreen>
+            </iframe>
+            <p><b>Instruction</b>: {{description}}</p>
+            <p><b>Startdate</b>: {{startdate}}</p>
+            <p><b>Enddate</b>: {{enddate}}</p>
+            <p><b>Status</b>: {{status}}</p>
+            <p><b>Short answer</b>: {{question1}}</p>
+            <p><b>Multiple Choice</b>: {{question2.[0]}}</p>
+            <ul>
+                <ol>
+                    Answer A: {{question2.[1]}}
+                </ol>
+                <ol>
+                    Answer B: {{question2.[2]}}
+                </ol>
+                <ol>
+                    Answer C: {{question2.[3]}}
+                </ol>
+                <ol>
+                    Answer D: {{question2.[4]}}
+                </ol>
+            </ul>
+            <p><b>Multiple Answer</b>: {{question3.[0]}}</p>
+            <ul>
+                <ol>
+                    Answer A: {{question3.[1]}}
+                </ol>
+                <ol>
+                    Answer B: {{question3.[2]}}
+                </ol>
+                <ol>
+                    Answer C: {{question3.[3]}}
+                </ol>
+                <ol>
+                    Answer D: {{question3.[4]}}
+                </ol>
+            </ul>
+            <p><b>Image instruction</b>: {{question4}}</p>
+            <p><b>Quota</b>: {{quota}}</p>
+            <p><b>Salary</b>: {{credit}}</p>
+            <p><b>Number of taken</b>: {{#if taken}} {{taken.length}} {{else}} No one take it {{/if}}</p>
+            <a href="#myModal" class="trigger-btn btn btn-danger" data-toggle="modal">Delete</a>
+        </div>
+        <div class="card-footer small text-muted">Updated at {{updated_at}}</div>
+        {{/each}}
+
+    </div>
+</div>
+
+<!-- Modal HTML -->
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog modal-confirm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="icon-box">
+                    <i class="fas fa-trash-alt mx-2 my-2"></i>
+                </div>
+                <h4 class="modal-title">Are you sure?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Do you really want to delete these records? This process cannot be undone. You'll get a full refund
+                    of credit unspent.</p>
+                <em style="font-size: 0.8em">Note: If your shop had already taken by someone, you can't delete it
+                    manually it.</em>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+                <a href="#" class="trigger-btn btn btn-danger" data-toggle="modal" class="btn btn-danger" id="confirmdelete">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#confirmdelete").on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: `/client/shop/{{data.0.id}}`,
+                method: 'DELETE',
+                contentType: 'application/json',
+                statusCode: {
+                    500: function (data) { 
+                        console.log(data)
+                        alert(`You can't delete shop that already assigned to someone...`)
+                    }
+                },
+                success: function () {
+                    alert('Shop successfully deleted');
+                    window.location.href = "/client";
+                },
+                erorr: function (err) {
+                    console.log(err);
+                    alert(err);
+                }
+            });
+        })
+    })
+</script>

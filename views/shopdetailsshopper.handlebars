@@ -1,0 +1,116 @@
+<!-- Breadcrumbs-->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/shopper">Index</a>
+    </li>
+    <li class="breadcrumb-item active">Shopdetail {{data.0.id}}</li>
+</ol>
+
+<div class="container">
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-chart-area"></i>
+            Shop details</div>
+        <div class="card-body">
+            {{#each data}}
+            <p><b>Shopname</b>: {{shopname}}</p>
+            <p><b>Adress</b>: {{address}}</p>
+            <iframe width="100%" height="350" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDv4CRmZJHubErg1C_0xxR7yqTBspZouWU&q={{address}}"
+                allowfullscreen>
+            </iframe>
+            <p><b>Instruction</b>: <div style="border-style: solid;border-width:1px;height: 140px">{{description}}</div></p>
+            <p><b>Startdate</b>: {{startdate}}</p>
+            <p><b>Enddate</b>: {{enddate}}</p>
+            <p><b>Status</b>: {{status}}</p>
+            <p><b>Short answer</b>: {{question1}}</p>
+            <p><b>Multiple Choice</b>: {{question2.[0]}}</p>
+            <ul>
+                <ol>
+                    Answer A: {{question2.[1]}}
+                </ol>
+                <ol>
+                    Answer B: {{question2.[2]}}
+                </ol>
+                <ol>
+                    Answer C: {{question2.[3]}}
+                </ol>
+                <ol>
+                    Answer D: {{question2.[4]}}
+                </ol>
+            </ul>
+            <p><b>Multiple Answer</b>: {{question3.[0]}}</p>
+            <ul>
+                <ol>
+                    Answer A: {{question3.[1]}}
+                </ol>
+                <ol>
+                    Answer B: {{question3.[2]}}
+                </ol>
+                <ol>
+                    Answer C: {{question3.[3]}}
+                </ol>
+                <ol>
+                    Answer D: {{question3.[4]}}
+                </ol>
+            </ul>
+            <p><b>Image instruction</b>: {{question4}}</p>
+            <p><b>Quota</b>: {{quota}}</p>
+            <p><b>Salary</b>: {{credit}}</p>
+            <a href="#myModal" class="trigger-btn btn btn-success" data-toggle="modal">Take</a>
+            <a href="/shopper" class="trigger-btn btn btn-secondary">Return</a>
+        </div>
+        <div class="card-footer small text-muted">Updated at {{updated_at}}</div>
+        {{/each}}
+
+    </div>
+</div>
+
+<!-- Modal HTML -->
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog modal-confirm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="icon-box">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h4 class="modal-title">Are you sure?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Once you have accepted this job, you must try all your best to complete it before the expire date. You can't take the job again, even if you have gave up before.</p>
+                <em style="font-size: 0.8em">Note: Frequently give up or fail to accomplish the job will result in account ban.</em>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+                <a href="#" class="trigger-btn btn btn-success" data-toggle="modal" id="accept">Accept</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#accept").on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: `/shopper/shop/{{data.0.id}}`,
+                method: 'POST',
+                contentType: 'application/json',
+                statusCode: {
+                    500: function (data) { 
+                        console.log(data)
+                        alert(`You already taken the job, please check it again`)
+                    }
+                },
+                success: function () {
+                    alert('You have take the job! See it in "Job Assigned!"');
+                    window.location.href = "/shopper";
+                },
+                erorr: function (err) {
+                    console.log(err);
+                    alert(err);
+                }
+            });
+        })
+    })
+</script>

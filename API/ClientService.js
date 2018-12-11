@@ -4,7 +4,7 @@ class ClientService {
     }
 
     listindex(clientid) {
-        let query = this.knex.select('shopname', 'status','quota','status','shopinfo.id').from('shopinfo')
+        let query = this.knex.select('shopname', 'status','quota','status','shopinfo.id','startdate','enddate').from('shopinfo')
         .innerJoin('clientinfo', 'shopinfo._clientid', 'clientinfo.id')
         .where('clientinfo.id', clientid)
 
@@ -39,7 +39,7 @@ class ClientService {
             let today = new Date()
             let startdate = new Date(input.startdate)
             // Check if start date is earlier than today
-            if(startdate.getTime() < today.getTime()){
+            if(startdate.getTime() <= today.getTime()){
                 input.status = 'Live';
             }
 
@@ -52,10 +52,25 @@ class ClientService {
         
         }).then(callback).catch((e)=>
         {
-            return callback(new Error('invalid num'))
+            return callback(new Error(e))
         }
         );   
     }
+
+    deleteShop(shopinfo, callback){
+        this.knex.transaction(async (trx) => {
+
+            let totalCredit = shopinfo[0].credit * shopinfo[0].quota;
+            await trx("shopinfo").where('id',shopinfo[0].id).del();
+            await trx('clientinfo').increment('credit', totalCredit).where('id', shopinfo[0]._clientid);
+        
+        }).then(callback).catch((e)=>
+        {
+            return callback(new Error(e))
+        }
+        );   
+    }
+
 
 }
 

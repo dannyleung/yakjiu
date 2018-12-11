@@ -3,6 +3,8 @@ const { check, validationResult } = require('express-validator/check');
 const bcrypt = require('bcrypt');
 const passport = require('passport')
 const nodemailer = require('nodemailer');
+const ShopperService = require('../API/ShopperService');
+const moment = require('moment');
 let router = express.Router();
 
 
@@ -20,6 +22,20 @@ const mailTransport = nodemailer.createTransport({
 });
 // ------------- //
 
+// Check auth //
+function authCheck(req, res, next) {
+    if (req.isAuthenticated()) {
+        if (req.user.balance != undefined) {
+            return next();
+        } else {
+            res.send('please logout and login as a customer again')
+        }
+    } else {
+        res.redirect('../#login')
+    }
+}
+// --------- //
+
 // Setting Knex server //
 const knex = require('knex')({
     client: 'postgresql',
@@ -29,13 +45,74 @@ const knex = require('knex')({
         password: process.env.DB_PASSWORD
     }
 });
+let shopperService = new ShopperService(knex);
 // ------------------ //
 
+//TEST ONLY//
+// router.get('/test', (req, res) => {
+//     shopperService.checkClientID(1).then((result) => {
+//         res.send(result)
+//     })
+// })
+////////////
+
 // Shopper index page (may not use)//
-router.get('/', (req, res) => {
-    res.send('This is Shopper<<< index page')
+router.get('/', authCheck, (req, res) => {
+    shopperService.listindexlist().then((result) => {
+
+        result.forEach(function (e) {
+            e.startdate = moment(e.startdate).format('l');
+            e.enddate = moment(e.enddate).format('l');
+        })
+
+        res.render('shopperindex', { layout: 'shoppermain', currentCredit: req.user.balance, name: req.user.username, data: result })
+    })
 })
 // ------------------- //
+
+// Shop info details //
+router.get('/shop/:id', authCheck, (req, res) => {
+    shopperService.listdetails(req.params.id).then(function (result) {
+
+        if (result.length < 1 || result[0].status != "Live") {
+            res.send('Dont be evil')
+        } else {
+            res.render('shopdetailsshopper', { layout: 'shoppermain', currentCredit: req.user.balance, name: req.user.username, data: result })
+        }
+
+    })
+})
+// ---------------- //
+
+// Assign job request //
+router.post('/shop/:id', authCheck, (req, res) => {
+    shopperService.checkClientID(req.params.id).then(function (result) {
+        console.log(result[0].taken)
+        console.log(result[0].taken.includes(req.user.id))
+
+        if (result[0].status != "Live") {
+            res.send('Dont be evil')
+        } else if(result[0].taken.includes(req.user.id)) {
+
+            res.status(500)
+            res.send('error')
+
+        } else {
+
+            let clientid = result[0]._clientid
+            shopperService.takejob(req.params.id, req.user.id, clientid, (err) => {
+                if (err) {
+                    res.send('Error' + err)
+                } else {
+                    res.send('You take the job!')
+                }
+            })
+
+        }
+
+    })
+})
+// ---------------- //
 
 // Success page for testing //
 router.get('/success', (req, res) => {
@@ -45,9 +122,9 @@ router.get('/success', (req, res) => {
 
 // Shopper login //
 router.post('/login',
-    passport.authenticate('shopper-local', { failureRedirect: '/' }),
+    passport.authenticate('shopper-local', { failureRedirect: '/#login' }),
     function (req, res, next) {
-        res.redirect('/shopper/success');
+        res.redirect('/shopper/');
     });
 // ------------ //
 
@@ -88,7 +165,7 @@ router.post('/register', [
 
                                 knex('shopperinfo').insert(user).then((result) => {
                                     console.log(result) //show stored result
-                                    
+
                                     mailTransport.sendMail({
                                         from: 'Yakjiu Customer service <yakjiu.com.hk@gmail.com>',
                                         to: 'toomanychung <toomanychung@gmail.com>',
@@ -98,7 +175,7 @@ router.post('/register', [
 
                                         if (err) {
                                             console.log('Unable to send email: ' + err);
-                                        } 
+                                        }
 
                                     });
 
@@ -121,11 +198,19 @@ router.post('/register', [
         })
 // ---------------- //
 
-// Shopper forget password (Email) //
-router.get('/resetpasswordemail', (req,res)=>{
+// Logout page //
+router.get('/logout', function (req, res) {
+    req.logout();
+    res.redirect('/');
+});
+// --------- //
 
-    res.render('empty', {layout:"emailreset"}, function(err, html){
-        if(err){
+
+// Shopper forget password (Email) //
+router.get('/resetpasswordemail', (req, res) => {
+
+    res.render('empty', { layout: "emailreset" }, function (err, html) {
+        if (err) {
             console.log('error in email template')
         }
 
@@ -134,11 +219,11 @@ router.get('/resetpasswordemail', (req,res)=>{
             to: 'toomanychung <toomanychung@gmail.com>',
             subject: 'Yakjiu password reset',
             html: html
-          }, function(err) {
-            if(err) {
-              console.error('Unable to send reset email: ' + err.stack)
+        }, function (err) {
+            if (err) {
+                console.error('Unable to send reset email: ' + err.stack)
             };
-          });
+        });
 
     })
 
