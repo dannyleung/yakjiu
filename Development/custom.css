@@ -82,7 +82,7 @@ header .section1 {
     width: 100%;
     padding: 50px 15px;
     text-align: center;
-    background-color: #4948118e;
+    background-color: #1f1f25b7;
 }
  
 header .section1 .topPageContent h1 {
@@ -129,7 +129,7 @@ header p {
 #about {
     /* background-color: #f05f40; */
     color: white;
-    background-image: linear-gradient(#4948118e, #ffffffda);
+    background-image: linear-gradient(#1f1f25b7, #1f1f25b7);
 }
 
 .centered {
@@ -154,14 +154,14 @@ hr.whiteDash {
     padding: 100px 15px;
     text-align: center;
     /* background-color: #ffffffda; */
-    background-image: linear-gradient(#4948118e, #ffffff);
+    background-image: linear-gradient(#1f1f25b7, #1f1f25b7);
 }
 
 h2 {
-    color: #000000;
+    color: #ffffff;
 }
 h3 {
-    color: #000000;
+    color: #ffffff;
 }
 
 .iconBox p{
@@ -174,7 +174,7 @@ h3 {
 }
 
 #portfolio {
-    background-image: linear-gradient(#ffffff00, #ffffff);
+    background-image: linear-gradient(#1f1f25b7, #1f1f25b7);
 }
 
 
@@ -186,10 +186,14 @@ h3 {
     vertical-align: middle;
 }
 
+ul {
+    list-style-type: none;
+  }
+
 .blurb {
     color: white;
     /* background-color: black; */
-    background-image: linear-gradient(#ffffff, #4849118e);
+    background-image: linear-gradient(#1f1f25b7, #1f1f25b7);
 }
 
 #contact {
@@ -197,7 +201,7 @@ h3 {
     width: 100%;
     padding: 50px 15px;
     text-align: center;
-    background-color: #4948118e;
+    background-color: #1f1f25b7;
     color:#ffffff;
 }
 
@@ -297,7 +301,7 @@ h3 {
     }
 
 .navbar-default.scrolled {
-background:#ffffffc7;
+background:linear-gradient(#ffffff, #00000000);
 }
 
 /* .navbar-default.scrolled .navbar-nav {
@@ -326,13 +330,14 @@ background:#ffffffc7;
     .logo {
         width: 50px;
         height: auto;
+        padding: 10px;
     }
     
     .navbar-default .navbar-brand {
         text-transform: uppercase;
         font-weight: 700;
         font-family: 'Open Sans', Arial;
-        color: #0026ffe6;
+        color: #ffffffe6;
         
         /* border: 2px solid #5c5c5c; */
         padding: 2px;
