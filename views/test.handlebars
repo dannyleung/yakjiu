@@ -52,7 +52,7 @@
     <div class="row">
         {{#if data}}
         {{#each data}}
-        <div class="col-lg-4">
+        <div class="col-lg-3 col-12">
             <div class="card my-2">
                 <div class="card-body text-left">
                     <p class="card-text text-primary">Shop ID: {{id}}</p>
@@ -62,7 +62,6 @@
                     <p class="card-text">Startdate: {{startdate}}</p>
                     <p class="card-text">Enddate: {{enddate}}</p>
                     <a href="/client/shop/{{id}}"><button type="button" class="btn btn-info">Details</button></a>
-                    <button type="button" class="btn btn-danger">Delete</button>
                 </div>
             </div>
         </div>

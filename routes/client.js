@@ -14,10 +14,10 @@ require('../config/clientpassport')(passport2)
 const mailTransport = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASSWORD
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD
     }
-  });
+});
 // ------------- //
 
 // Setting Knex server //
@@ -54,14 +54,38 @@ router.get('/', authCheck, (req, res) => {
 })
 // ------------------- //
 
-// Shop info details // (Need to check id is match with owner later)
+// Shop info details //
 router.get('/shop/:id', authCheck, (req, res) => {
     clientService.listdetails(req.params.id).then(function (result) {
 
-        if(result.length < 1 ||req.user.id != result[0]._clientid || req.user.credit == undefined){
+        if (result.length < 1 || req.user.id != result[0]._clientid || req.user.credit == undefined) {
             res.send('Dont be evil')
         } else {
-            res.send(result)        
+            res.render('shopdetails', { data: result, currentCredit: req.user.credit })
+        }
+
+    })
+})
+// ---------------- //
+
+// Delete shop info //
+router.delete('/shop/:id', authCheck, (req, res) => {
+    clientService.listdetails(req.params.id).then(function (result) {
+
+        if (result.length < 1 || req.user.id != result[0]._clientid || req.user.credit == undefined) {
+            res.send('Dont be evil')
+        } else if(result[0].taken != null){
+            res.status(500)        // HTTP status 404: NotFound
+            .send('already assigned');
+        } else {
+            clientService.deleteShop(result, (err) => {
+                if (err) {
+                    res.send('Error' + err)
+                } else {
+                    res.status(200)
+                    res.send('Delete ok!!')
+                }
+            })
         }
 
     })
@@ -143,8 +167,8 @@ router.post('/newshop', [
 
         const errors = validationResult(req);
         req.body._clientid = req.user.id
-        req.body.question2 = [req.body.question2,req.body.question2a,req.body.question2b,req.body.question2c,req.body.question2d]
-        req.body.question3 = [req.body.question3,req.body.question3a,req.body.question3b,req.body.question3c,req.body.question3d]
+        req.body.question2 = [req.body.question2, req.body.question2a, req.body.question2b, req.body.question2c, req.body.question2d]
+        req.body.question3 = [req.body.question3, req.body.question3a, req.body.question3b, req.body.question3c, req.body.question3d]
         delete req.body.question2a;
         delete req.body.question2b;
         delete req.body.question2c;
@@ -171,13 +195,13 @@ router.post('/newshop', [
                 let consumeCredit = req.body.quota * req.body.credit
 
                 if (consumeCredit > currentCredit) {
-                    res.render('success', {msg:`You don't have enough credit to make new shop`, currentCredit: req.user.credit})
+                    res.render('success', { msg: `You don't have enough credit to make new shop`, currentCredit: req.user.credit })
                 } else {
                     clientService.createNewShop(req.body, (err) => {
                         if (err) {
                             res.send('Error' + err)
                         } else {
-                            res.render('success', {msg:`You've already created a new shop!!`, currentCredit: req.user.credit})
+                            res.render('success', { msg: `You've already created a new shop!!`, currentCredit: req.user.credit })
                         }
                     })
                 }
@@ -190,7 +214,7 @@ router.post('/newshop', [
 
 // Createshop page (GET)//
 router.get('/createshop', authCheck, (req, res) => {
-    res.render('createshop', {currentCredit: req.user.credit})
+    res.render('createshop', { currentCredit: req.user.credit })
 })
 // --------------- //
 
@@ -205,7 +229,7 @@ router.get('/logout', function (req, res) {
 
 // No this page (must place at bottom) //
 router.get('*', authCheck, (req, res) => {
-    res.render('404', {currentCredit: req.user.credit})
+    res.render('404', { currentCredit: req.user.credit })
 })
 // ----------------------------------- //
 
