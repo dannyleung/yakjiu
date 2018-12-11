@@ -57,6 +57,21 @@ class ClientService {
         );   
     }
 
+    deleteShop(shopinfo, callback){
+        this.knex.transaction(async (trx) => {
+
+            let totalCredit = shopinfo[0].credit * shopinfo[0].quota;
+            await trx("shopinfo").where('id',shopinfo[0].id).del();
+            await trx('clientinfo').increment('credit', totalCredit).where('id', shopinfo[0]._clientid);
+        
+        }).then(callback).catch((e)=>
+        {
+            return callback(new Error(e))
+        }
+        );   
+    }
+
+
 }
 
 module.exports = ClientService;

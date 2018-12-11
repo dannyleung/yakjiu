@@ -373,3 +373,9 @@ body.sidebar-toggled footer.sticky-footer {
     width: calc(100% - 90px);
   }
 }
+
+@media (max-width: 768px) {
+  .badge-secondary {
+    display: none !important;
+  }
+}
