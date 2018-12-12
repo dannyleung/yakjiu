@@ -46,10 +46,29 @@ function authCheck(req, res, next) {
 }
 // --------- //
 
+//TEST ONLY//
+router.get('/test', (req,res)=>{
+    clientService.listallJob(1).then((result)=>{
+        console.log(result)
+        res.send(result)
+    })
+})
+//
+
+//TEST ONLY//
+router.get('/test2', (req,res)=>{
+    clientService.listdetailJob(20).then((result)=>{
+        res.render('empty',{layout:'jobanswerpopup', data:result})
+    })
+})
+//
+
 // Client index page //
 router.get('/', authCheck, (req, res) => {
     clientService.listindex(req.user.id).then(function (result) {
-        res.render('test', { data: result, name: req.user.username, currentCredit: req.user.credit })
+        clientService.listreviewJob(req.user.id).then((jobreview)=>{
+            res.render('test', { data: result, name: req.user.username, currentCredit: req.user.credit , jobreview: jobreview})
+        })
     })
 })
 // ------------------- //
@@ -218,6 +237,96 @@ router.get('/createshop', authCheck, (req, res) => {
 })
 // --------------- //
 
+// Job review page //
+router.get('/jobreview', authCheck, (req, res) => {
+    clientService.listreviewJob(req.user.id).then((result)=>{
+        res.render('jobneedreview', { data:result, currentCredit: req.user.credit })
+    })
+})
+// -------------- //
+
+// Job review datail page //
+router.get('/jobreview/:id', authCheck, (req, res) => {
+    clientService.listdetailJob(req.params.id).then((result)=>{
+
+        if(result.length <0 || result[0]._clientid != req.user.id || result[0].status != 'Review'){
+            res.send(`Don't be evil`)
+        } else {
+            res.render('empty',{layout:'jobanswerpopup', data:result})
+        }
+
+    })
+})
+// -------------------- //
+
+// Accept job //
+router.post('/jobreview/:id/accept', authCheck, (req, res) => {
+
+    clientService.listdetailJob(req.params.id).then((result)=>{
+
+        if (result[0]._clientid != req.user.id){
+            res.status(500)
+            res.send('no permission to approve')
+        } else {
+            clientService.accecptJob(req.params.id, (err)=>{
+                if(err){
+                    console.log(err)
+                    res.status(500)
+                } else {
+                    console.log('successfully approve jobid: ' + req.params.id)
+                    res.send('OK')
+                }
+            })
+
+        }
+
+    })
+})
+// ------------- //
+
+// Reject job //
+router.post('/jobreview/:id/reject', authCheck, (req, res) => {
+
+    clientService.listdetailJob(req.params.id).then((result)=>{
+
+        if (result[0]._clientid != req.user.id){
+            res.status(500)
+            res.send('no permission to reject')
+        } else {
+            clientService.rejectJob(req.params.id).then((err)=>{
+                console.log('successfully reject jobid: ' + req.params.id)
+                res.send('OK')
+            })
+        }
+
+    })
+
+})
+// ------------- //
+
+// Show all job //
+router.get('/alljob', authCheck, (req, res) =>{
+
+    clientService.listallJob(req.user.id).then((result)=>{
+        res.render('alljob', { data:result, currentCredit: req.user.credit })
+    })
+    
+})
+// ------------ //
+
+// Job datail page (no review) //
+router.get('/jobdetail/:id', authCheck, (req, res) => {
+    clientService.listdetailJob(req.params.id).then((result)=>{
+
+        if(result.length <0 || result[0]._clientid != req.user.id || result[0].status == 'Review'){
+            res.send(`Don't be evil`)
+        } else {
+            res.render('empty',{layout:'jobdetailonly', data:result})
+        }
+
+    })
+})
+// -------------------- //
 
 // Logout page //
 router.get('/logout', function (req, res) {

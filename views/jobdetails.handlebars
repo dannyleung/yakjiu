@@ -1,0 +1,51 @@
+<!-- Breadcrumbs-->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/shopper">Index</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="/shopper/assignedjob">Assigned job list</a>
+    </li>
+    <li class="breadcrumb-item active">Answer survey</li>
+</ol>
+
+<div class="container">
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-chart-area"></i>
+            Survey details</div>
+        {{#each data}}
+        <form action="/shopper/job/{{id}}" method="post" enctype="multipart/form-data" id="answersurgery">
+            <div class="card-body">
+                <p><b>Shopname</b>: {{shopname}}</p>
+                <p><b>Adress</b>: {{address}}</p>
+                <iframe width="700" height="350" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDv4CRmZJHubErg1C_0xxR7yqTBspZouWU&q={{address}}"
+                    allowfullscreen>
+                </iframe>
+                <p><b>Instruction</b>:
+                    <div style="border-style: solid;border-width:1px;height: 140px">{{description}}</div>
+                </p>
+                <em>Please kindly follow the Instruction / Requirment above (if any), to avoid reject.</em>
+                <p class="my-3"><b>Short answer</b>: {{question1}}</p>
+                <input required type="text" placeholder="Enter Answer Here.." class="form-control my-3" name="answer1"
+                    maxlength="50">
+                <p><b>Multiple Choice</b>: {{question2.[0]}}</p>
+                <input type="radio" name="answer2" value="{{question2.[1]}}"> {{question2.[1]}}<br>
+                <input type="radio" name="answer2" value="{{question2.[2]}}"> {{question2.[2]}}<br>
+                <input type="radio" name="answer2" value="{{question2.[3]}}"> {{question2.[3]}}<br>
+                <input type="radio" name="answer2" value="{{question2.[4]}}"> {{question2.[4]}}<br>
+                <p class="my-3"><b>Multiple Answer</b>: {{question3.[0]}}</p>
+                <input type="checkbox" name="answer3a" value="{{question3.[1]}}"> {{question3.[1]}}<br>
+                <input type="checkbox" name="answer3b" value="{{question3.[2]}}"> {{question3.[2]}}<br>
+                <input type="checkbox" name="answer3c" value="{{question3.[3]}}"> {{question3.[3]}}<br>
+                <input type="checkbox" name="answer3d" value="{{question3.[4]}}"> {{question3.[4]}}<br>
+                <p class="my-3"><b>Image instruction (Max 10Mb)</b>: {{question4}}</p>
+                <div class="my-4"><input type="file" id="input_file" name="avatar" required></div>
+                <input type="reset" value="Reset" class="btn btn-secondary btn-xl page-scroll">
+                <input type="submit" value="Complete" class="btn btn-success btn-xl page-scroll">
+            </div>
+            <div class="card-footer small text-muted">Updated at {{updated_at}}</div>
+        </form>
+        {{/each}}
+    </div>
+</div>

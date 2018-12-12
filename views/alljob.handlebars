@@ -1,0 +1,42 @@
+<!-- Breadcrumbs-->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/client">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item active">Processing / Past Job</li>
+</ol>
+
+<div class="table-responsive">
+    <table class="table" id="dataTable">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">#JobID</th>
+                <th scope="col">Shopname</th>
+                <th scope="col">Handled by</th>
+                <th scope="col">Last Update</th>
+                <th scope="col">Salary</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data}}
+            <tr>
+                <th scope="row"><a href="#" onclick="popupJob({{id}})">{{id}}</a></th>
+                <td>{{shopname}}</td>
+                <td>{{firstname}} {{lastname}}</td>
+                <td>{{updated_at}}</td>
+                <td>{{credit}}</td>
+                <td>
+                    <p class="{{status}}">{{status}}</p>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function popupJob(id) {
+        var jobWindow = window.open(`/client/jobdetail/${id}`, "jobdetailswindow", "width=500,height=800,status=0,menubar=0,directories=0,top=0,left=10");
+    }
+</script>
