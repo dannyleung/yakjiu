@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Jobdetail: {{data.[0].id}}</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+
+    <!-- Moment -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
+
+    <style>
+        hr.style11 {
+            height: 6px;
+            background: url(http://ibrahimjabbari.com/english/images/hr-11.png) repeat-x 0 0;
+            border: 0;
+        }
+
+        p {
+            padding-bottom: 3px;
+        }
+
+        .Approve {
+            color: green;
+        }
+
+        .Reject {
+            color: red;
+        }
+
+        .Pending {
+            color: gray;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="p-4">
+        <div class="container border border-secondary rounded p-4">
+            <div class="row">
+                <div class='col-12'>
+                    <h1 class="text-center {{data.[0].status}}">{{data.[0].status}} Job Review: {{data.[0].id}}</h1>
+                    <hr class="style11">
+                    <p><b>Question 1:</b></p>
+                    <p>{{data.[0].question1}}</p>
+                    <p><b>Answer 1:</b></p>
+                    <p>{{data.[0].answer1}}</p>
+                    <p><b>Question 2:</b></p>
+                    <p>{{data.[0].question2.[0]}}</p>
+                    <p><b>Answer 2:</b></p>
+                    <p>{{data.[0].answer2}}</p>
+                    <p><b>Question 3:</b></p>
+                    <p>{{data.[0].question3.[0]}}</p>
+                    <p><b>Answer 3:</b></p>
+                    <ul>
+                        {{#if data.[0].answer3.[1]}}<li>{{data.[0].answer3.[1]}}</li>{{/if}}
+                        {{#if data.[0].answer3.[2]}}<li>{{data.[0].answer3.[2]}}</li>{{/if}}
+                        {{#if data.[0].answer3.[3]}}<li>{{data.[0].answer3.[3]}}</li>{{/if}}
+                        {{#if data.[0].answer3.[4]}}<li>{{data.[0].answer3.[4]}}</li>{{/if}}
+                    </ul>
+                    <p><b>Image instruction:</b></p>
+                    <p>{{data.[0].question4}}</p>
+                    <p><b>★Image:</b></p>
+                    {{#if data.[0].answer4}}<img class="img-fluid" src="/uploads/{{data.[0].answer4}}">{{else}}
+                    <p>No Image uploaded yet!!</p>
+                    {{/if}}
+                    <br>
+                    <div class="col-12 text-center my-4">
+                        <a class="btn btn-secondary btn-lg mx-2" href="#" role="button" id="close">Close</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    $(document).ready(function () {
+
+        $("#close").on('click', function (e) {
+            window.close()
+        });
+
+    })
+
+</script>

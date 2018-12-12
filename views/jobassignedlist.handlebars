@@ -1,0 +1,34 @@
+<!-- Breadcrumbs-->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/shopper">Index</a>
+    </li>
+    <li class="breadcrumb-item active">Assigned job list</li>
+</ol>
+
+<div class="container">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#JobID</th>
+                    <th scope="col">Shopname</th>
+                    <th scope="col">Expire date</th>
+                    <th scope="col">Salary</th>
+                    <th scope="col">Handle</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each data}}
+                <tr>
+                    <th scope="row">{{id}}</th>
+                    <td class="align-middle">{{shopname}}</td>
+                    <td class="align-middle">{{enddate}}</td>
+                    <td class="align-middle">{{credit}}</td>
+                    <td><a href='/shopper/job/{{id}}' class="btn btn-outline-primary btn-sm">Answer</a></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
