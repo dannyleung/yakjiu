@@ -13,15 +13,57 @@ html {
 
 body {
   font-family: 'Source Sans Pro';
+
+/* ADDED BY DANNY */
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgb(255, 255, 255) 100%), url(../img/bg1.jpg);
+  background: -webkit-gradient(linear, left top, right top, from(rgba(255, 255, 255, 0.1)), to(rgb(255, 255, 255))), url("../img/bg1.jpg");
+  
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+
+  color: rgb(0, 0, 0);
+  
+  /* background-image: url(img/header1.jpg);
+  background-position: center;
+  background-size: cover; */
 }
+
+
+  /* background: -webkit-gradient(linear, left top, right top, from(rgba(255, 255, 255, 0.1)), to(rgba(255, 255, 255, 0.1))), url("../img/bg1.jpg");
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgb(255, 255, 255) 100%), url("../img/bg1.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover; */
+
+
+
+/* body {
+  position: relative;
+  background-attachment: fixed;
+  background-size: cover;
+  
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+} */
+
+
+
+
+
+
 
 .btn-xl {
   padding: 1.25rem 2.5rem;
 }
 
 .content-section {
-  padding-top: 7.5rem;
-  padding-bottom: 7.5rem;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
 }
 
 .content-section-heading h2 {
@@ -94,11 +136,12 @@ h6 {
   height: auto;
   padding-top: 8rem;
   padding-bottom: 8rem;
-  background: -webkit-gradient(linear, left top, right top, from(rgba(255, 255, 255, 0.1)), to(rgba(255, 255, 255, 0.1))), url("../img/bg-2.jpg");
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%), url("../img/bg-2.jpg");
+  background-color: rgba(0, 0, 0, 0);
+  /* background: -webkit-gradient(linear, left top, right top, from(rgba(255, 255, 255, 0.1)), to(rgba(255, 255, 255, 0.1))), url("../img/bg1.jpg");
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgb(255, 255, 255) 100%), url("../img/bg1.jpg");
   background-position: center center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: cover; */
 }
 
 .masthead h1 {
@@ -106,6 +149,30 @@ h6 {
   margin: 0;
   padding: 0;
 }
+
+/* ADDED BY DANNY */
+#about {
+  background-image: linear-gradient(#ffffffb7, #1D809F);
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+#callout {
+  background-image: linear-gradient(#1D809F, #ffffffb7);
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
+.services-detail {
+  background-color: #ffffff
+}
+
+#mobility ul {
+  list-style-type: none;
+  text-align: left;
+}
+
+/* END */
 
 @media (min-width: 992px) {
   .masthead {
@@ -218,12 +285,17 @@ h6 {
 }
 
 .callout {
+  background: #ffffff;
+  padding: 5rem 0;
+}
+
+/* .callout {
   padding: 15rem 0;
   background: -webkit-gradient(linear, left top, right top, from(rgba(255, 255, 255, 0.1)), to(rgba(255, 255, 255, 0.1))), url("../img/bg-3.jpg");
   background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%), url("../img/bg-3.jpg");
   background-position: center center;
   background-repeat: repeat;
-}
+} */
 
 .callout h2 {
   font-size: 3.5rem;
