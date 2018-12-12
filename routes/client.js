@@ -6,9 +6,11 @@ const ClientService = require('../API/ClientService');
 const nodemailer = require('nodemailer');
 let router = express.Router();
 
+
 // Using Client config //
 require('../config/clientpassport')(passport2)
 // ------------------- //
+
 
 // Email setting //
 const mailTransport = nodemailer.createTransport({

@@ -8,12 +8,84 @@ const moment = require('moment');
 const multer = require('multer');
 const fs = require('fs')
 const path = require('path')
+const redis = require('redis');
+const createToken = require('../config/createToken') //function
 let router = express.Router();
 
+// token.then((result)=>{console.log(result)})
 
 // Using Shopper config //
 require('../config/shopperpassport')(passport)
 // ------------------- //
+
+// Redis setup //
+var redisClient = redis.createClient({
+    host: 'localhost',
+    port: 6379,
+    password: process.env.REDIS_PASSWORD
+});
+
+redisClient.on('error', function (err) {
+    console.log(err);
+});
+
+// redisClient.get('username2', function(err, data){
+//     if (err) {
+//         return console.log(err);
+//     }
+//     if (data != null) {
+//         console.log('user already exist, the key is: ' + data)
+//     } else {
+//         createToken().then(function (token) {
+//             console.log('New token: ' + token)
+//             redisClient.setex(token, 600, 'username2', function (err, data) {
+//                 if (err) {
+//                     return console.log(err);
+//                 }
+
+//                 redisClient.setex('username2', 600, token, function (err, data) {
+//                     if (err) {
+//                         return console.log(err);
+//                     }
+
+
+//                 });
+//             });
+//         })
+//     }
+// })
+
+// createToken().then(function (token) {
+//     console.log(token)
+//     redisClient.setex(token, 600, 'username', function (err, data) {
+//         if (err) {
+//             return console.log(err);
+//         }
+
+//         redisClient.setex('username', 600, token, function (err, data) {
+//             if (err) {
+//                 return console.log(err);
+//             }
+
+
+//         });
+//     });
+// })
+
+
+// redisClient.setex('location', 60, 'Hong Kong', function(err, data) {
+//     if(err) {
+//         return console.log(err);
+//     }
+
+//     redisClient.get('location', function(err, data){
+//         if(err) {
+//             return console.log(err);
+//         }
+//         console.log('The value is ', data);
+//     });
+// });
+// ---------- //
 
 // Multer setting //
 var uploads = multer({
@@ -37,8 +109,8 @@ var uploads = multer({
 const mailTransport = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD
+        user: process.env.EMAIL_USER2,
+        pass: process.env.EMAIL_PASSWORD2
     }
 });
 // ------------- //
@@ -71,9 +143,7 @@ let shopperService = new ShopperService(knex);
 
 //TEST ONLY//
 router.get('/test', (req, res) => {
-    shopperService.listJobHistory(1).then((result) => {
-        res.send(result)
-    })
+    res.render('empty', { layout: 'resetpassword' })
 })
 ////////////
 
@@ -237,7 +307,7 @@ router.post('/job/:id', authCheck, uploads.single('avatar'), (req, res) => {
         if (err) {
             res.send('Error' + err)
         } else {
-            res.send('You answer the survey! status changed!!')
+            res.render('successShopper', { layout: 'shoppermain', currentCredit: req.user.balance, name: req.user.username, msg: 'You sucessfully answer the survey!' })
         }
     });
 
@@ -271,7 +341,7 @@ router.post('/register', [
                 // res.render('users/register', { errors: errors.array() })
             } else {
                 let user = req.body;
-                let userquery = knex.select("*").from("shopperinfo").where("username", user.username);
+                let userquery = knex.select().from("shopperinfo").where("username", user.username);
                 // check if username already exist:
                 userquery.then((rows) => {
                     if (rows.length > 0) {
@@ -296,18 +366,18 @@ router.post('/register', [
                                 knex('shopperinfo').insert(user).then((result) => {
                                     console.log(result) //show stored result
 
-                                    mailTransport.sendMail({
-                                        from: 'Yakjiu Customer service <yakjiu.com.hk@gmail.com>',
-                                        to: 'toomanychung <toomanychung@gmail.com>',
-                                        subject: 'Thank you for being our Shopper!',
-                                        html: `<h1>Hello NEW USER: ${user.username} </h1><p>Nice to meet you ARRRR.</p>`
-                                    }, function (err) {
+                                    // mailTransport.sendMail({
+                                    //     from: 'Yakjiu Customer service <yakjiu.com.hk@gmail.com>',
+                                    //     to: 'toomanychung <toomanychung@gmail.com>',
+                                    //     subject: 'Thank you for being our Shopper!',
+                                    //     html: `<h1>Hello NEW USER: ${user.username} </h1><p>Nice to meet you ARRRR.</p>`
+                                    // }, function (err) {
 
-                                        if (err) {
-                                            console.log('Unable to send email: ' + err);
-                                        }
+                                    //     if (err) {
+                                    //         console.log('Unable to send email: ' + err);
+                                    //     }
 
-                                    });
+                                    // });
 
                                     res.send('Shopper Reg success!')
 
@@ -335,30 +405,153 @@ router.get('/logout', function (req, res) {
 });
 // --------- //
 
+// Forgetpassword page //
+router.get('/forgetpassword', (req, res) => {
+    res.render('empty', { layout: 'forgetpassword' })
+})
+// ------------------- //
 
-// Shopper forget password (Email) //
-router.get('/resetpasswordemail', (req, res) => {
+// Forgetpassword POST //
+router.post('/forgetpassword', (req, res) => {
+    console.log(req.body.username)
+    let userquery = knex.select().from("shopperinfo").where("username", req.body.username);
 
-    res.render('empty', { layout: "emailreset" }, function (err, html) {
+    userquery.then(function (rows) {
+        if (rows.length == 0) {
+            console.log(rows)
+            res.render('empty', { layout: 'forgetpassword', msg: 'User did not exist' });
+        } else {
+            redisClient.get(rows[0].username, function (err, data) {
+                if (err) {
+                    return console.log(err);
+                }
+                if (data != null) {
+                    console.log('user already exist, the key is: ' + data)
+                    res.render('empty', { layout: 'forgetpassword', msg: `You have already requested to reset password` });
+                } else {
+                    createToken().then(function (token) {
+                        console.log('New token: ' + token)
+                        redisClient.setex(token, 86400, rows[0].username, function (err, data) {
+                            if (err) {
+                                return console.log(err);
+                            }
+
+                            redisClient.setex(rows[0].username, 86400, token, function (err, data) {
+                                if (err) {
+                                    return console.log(err);
+                                }
+                                // Setup token OK, ready to seend email
+                                res.render('empty', { layout: "emailreset", name: rows[0].username, token: token }, function (err, html) {
+                                    if (err) {
+                                        console.log('error in email template')
+                                    }
+
+                                    mailTransport.sendMail({
+                                        from: 'Yakjiu Customer service',
+                                        to: rows[0].email,
+                                        subject: 'Yakjiu password reset',
+                                        html: html
+                                    }, function (err) {
+                                        if (err) {
+                                            console.error('Unable to send reset email: ' + err.stack)
+                                            return;
+                                        };
+                                        res.render('empty', { layout: 'forgetpassword', msg: `Reset password Email have sent to ${rows[0].email}` });
+                                    });
+
+                                })
+
+
+                            });
+                        });
+                    })
+                }
+            })
+        }
+    })
+
+})
+// ------------------- //
+
+
+// Reset Password Page //
+router.get('/resetpassword/token/:token', (req, res) => {
+
+    //check token vaild or not
+    redisClient.get(req.params.token, function (err, username) {
         if (err) {
-            console.log('error in email template')
+            console.log(err)
+            res.send('err')
+            return;
         }
 
-        mailTransport.sendMail({
-            from: 'Yakjiu Customer service<admin@yakjiu.com>',
-            to: 'toomanychung@gmail.com',
-            subject: 'Yakjiu password reset',
-            html: html
-        }, function (err) {
-            if (err) {
-                console.error('Unable to send reset email: ' + err.stack)
-            };
+        if (username == null) {
+            res.send('invaild token')
+            return;
+        }
+
+        res.render('empty', { layout: 'resetpassword', token: req.params.token, username: username })
+
+
+    })
+
+});
+// ------------------------------ //
+
+// Reset Password request //
+router.post('/resetpassword/token/:token', (req, res) => {
+    console.log(req.body)
+    redisClient.get(req.params.token, function (err, username) {
+        if (username == null) {
+            console.log('Token expired OR username not match')
+            return;
+        }
+
+        let newPassword = req.body.password
+
+        bcrypt.genSalt(10, function (err, salt) {
+            bcrypt.hash(newPassword, salt, function (err, hash) {
+                // Store hash in your password DB.
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+
+
+                newPassword = hash;
+                console.log(`Hased newPassword: ${newPassword}`)
+
+                knex('shopperinfo').where('username', username)
+                    .update({ password: newPassword }).then((result) => {
+                        console.log('Successfully change password!!' + result)
+
+                        res.send('Change password success!!')
+
+                        redisClient.del(req.params.token, function (err, response) {
+                            if (response == 1) {
+                                console.log("Deleted Token Successfully!")
+                                redisClient.del(username, function (err, response) {
+                                    if (response == 1) {
+                                        console.log("Deleted User Successfully!")
+                                    } else {
+                                        console.log("Cannot delete User")
+                                    }
+                                })
+                            } else {
+                                console.log("Cannot delete Token")
+                            }
+                        })
+
+                    }).catch((err => {
+                        // console.log(err);
+                        res.send('Cannot reg')
+                    }))
+            });
         });
 
     })
 
-    res.send('testing Email sent')
 })
-// ------------------------------ //
+// ---------------------- //
 
 module.exports = router;
