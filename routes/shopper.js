@@ -12,8 +12,6 @@ const redis = require('redis');
 const createToken = require('../config/createToken') //function
 let router = express.Router();
 
-// token.then((result)=>{console.log(result)})
-
 // Using Shopper config //
 require('../config/shopperpassport')(passport)
 // ------------------- //
@@ -29,62 +27,6 @@ redisClient.on('error', function (err) {
     console.log(err);
 });
 
-// redisClient.get('username2', function(err, data){
-//     if (err) {
-//         return console.log(err);
-//     }
-//     if (data != null) {
-//         console.log('user already exist, the key is: ' + data)
-//     } else {
-//         createToken().then(function (token) {
-//             console.log('New token: ' + token)
-//             redisClient.setex(token, 600, 'username2', function (err, data) {
-//                 if (err) {
-//                     return console.log(err);
-//                 }
-
-//                 redisClient.setex('username2', 600, token, function (err, data) {
-//                     if (err) {
-//                         return console.log(err);
-//                     }
-
-
-//                 });
-//             });
-//         })
-//     }
-// })
-
-// createToken().then(function (token) {
-//     console.log(token)
-//     redisClient.setex(token, 600, 'username', function (err, data) {
-//         if (err) {
-//             return console.log(err);
-//         }
-
-//         redisClient.setex('username', 600, token, function (err, data) {
-//             if (err) {
-//                 return console.log(err);
-//             }
-
-
-//         });
-//     });
-// })
-
-
-// redisClient.setex('location', 60, 'Hong Kong', function(err, data) {
-//     if(err) {
-//         return console.log(err);
-//     }
-
-//     redisClient.get('location', function(err, data){
-//         if(err) {
-//             return console.log(err);
-//         }
-//         console.log('The value is ', data);
-//     });
-// });
 // ---------- //
 
 // Multer setting //
@@ -142,8 +84,11 @@ let shopperService = new ShopperService(knex);
 // ------------------ //
 
 //TEST ONLY//
-router.get('/test', (req, res) => {
-    res.render('empty', { layout: 'resetpassword' })
+router.post('/test', (req, res) => {
+    delete req.body.repeatpassword
+    delete req.body.accept
+    console.log(req.body)
+    res.send('OK')
 })
 ////////////
 
@@ -316,7 +261,7 @@ router.post('/job/:id', authCheck, uploads.single('avatar'), (req, res) => {
 
 // Success page for testing //
 router.get('/success', (req, res) => {
-    res.send('Shopper Login OK!')
+    res.render('empty',{layout:'redirect'})
 })
 // ----------------------- //
 
@@ -327,6 +272,12 @@ router.post('/login',
         res.redirect('/shopper/');
     });
 // ------------ //
+
+// Shopper registrer page //
+router.get('/register', (req,res)=>{
+    res.render('empty',{layout: 'shoppersignup'})
+})
+// ------------------- //
 
 // Shopper register //
 router.post('/register', [
@@ -341,6 +292,8 @@ router.post('/register', [
                 // res.render('users/register', { errors: errors.array() })
             } else {
                 let user = req.body;
+                delete user.repeatpassword
+                delete user.accept
                 let userquery = knex.select().from("shopperinfo").where("username", user.username);
                 // check if username already exist:
                 userquery.then((rows) => {
@@ -366,20 +319,7 @@ router.post('/register', [
                                 knex('shopperinfo').insert(user).then((result) => {
                                     console.log(result) //show stored result
 
-                                    // mailTransport.sendMail({
-                                    //     from: 'Yakjiu Customer service <yakjiu.com.hk@gmail.com>',
-                                    //     to: 'toomanychung <toomanychung@gmail.com>',
-                                    //     subject: 'Thank you for being our Shopper!',
-                                    //     html: `<h1>Hello NEW USER: ${user.username} </h1><p>Nice to meet you ARRRR.</p>`
-                                    // }, function (err) {
-
-                                    //     if (err) {
-                                    //         console.log('Unable to send email: ' + err);
-                                    //     }
-
-                                    // });
-
-                                    res.send('Shopper Reg success!')
+                                    res.redirect('/shopper/success')
 
                                 }
                                 ).catch((err => {
