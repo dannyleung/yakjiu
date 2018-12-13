@@ -47,6 +47,8 @@ class ClientService {
             let totalCredit = input.credit * input.quota
             //
 
+            input.taken = [];
+
             await trx("shopinfo").insert(input);
             await trx('clientinfo').decrement('credit', totalCredit).where('id', input._clientid);
 
