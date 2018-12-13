@@ -5,7 +5,7 @@ class ShopperService {
 
     listindexlist() {
         let query = this.knex.select('id', 'shopname', 'address', 'credit', 'startdate', 'enddate', 'quota', 'taken', 'status').from('shopinfo')
-            .where('status', 'Live')
+            .where('status', 'Live').andWhere('quota', '>', 0)
 
         return query
     }

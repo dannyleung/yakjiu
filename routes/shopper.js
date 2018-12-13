@@ -51,8 +51,8 @@ var uploads = multer({
 const mailTransport = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
-        user: process.env.EMAIL_USER2,
-        pass: process.env.EMAIL_PASSWORD2
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD
     }
 });
 // ------------- //
