@@ -1,0 +1,52 @@
+<!-- Breadcrumbs-->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/shopper">Index</a>
+    </li>
+    <li class="breadcrumb-item active">Job History</li>
+</ol>
+
+
+<div class="table-responsive">
+    <table class="table" id="dataTable">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">#JobID</th>
+                <th scope="col">Shopname</th>
+                <th scope="col">Salary</th>
+                <th scope="col">Status</th>
+                <th scope="col">Paid</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data}}
+            <tr>
+                <th scope="row"><a href="#" onclick="popupJob({{id}})">{{id}}</a></th>
+                <td>{{shopname}}</td>
+                <td>{{credit}}</td>
+                <td>
+                    <p class="{{status}}">{{status}}</p>
+                </td>
+                <td><i class="fas {{status}}"></i></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function popupJob(id) {
+        var jobWindow = window.open(`/shopper/jobdetail/${id}`, "jobdetailswindow", "width=500,height=800,status=0,menubar=0,directories=0,top=0,left=10");
+    }
+
+    $(document).ready(function () {
+
+        $('i').each(function() {
+            if ($(this).hasClass('Approve')){
+                $(this).addClass('fa-check')
+            } 
+        })
+
+    })
+
+</script>

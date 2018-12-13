@@ -73,7 +73,6 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                     <a class="dropdown-item" href="#">Settings</a>
-                    <a class="dropdown-item" href="#">Activity Log</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
                 </div>
@@ -93,13 +92,13 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/shopper/assignedjob">
                     <i class="fas fa-fw fa-tasks"></i>
-                    <span>Job Assigned<span class="badge badge-secondary" style="position:relative;font-size:0.8em;top:0rem">2</span></span></a>
+                    <span>Job Assigned{{#if jobbadege}}<span class="badge badge-secondary" style="position:relative;font-size:0.8em;top:0rem">{{jobbadege.length}}</span>{{/if}}</span></a>
                     
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/shopper/jobhistory">
                     <i class="fas fa-fw fa-history"></i>
                     <span>Job History</span></a>
             </li>

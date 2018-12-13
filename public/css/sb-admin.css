@@ -379,3 +379,22 @@ body.sidebar-toggled footer.sticky-footer {
     display: none !important;
   }
 }
+
+.Approve {
+  color: green;
+}
+
+.Reject {
+  color: red;
+}
+
+.Pending {
+  color: gray;
+}
+
+.index-Live {
+  background-color: rgba(108, 233, 108, 0.3);
+}
+.index-Pending {
+  background-color: rgba(247, 54, 54, 0.3);
+}
