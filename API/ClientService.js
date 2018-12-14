@@ -129,6 +129,12 @@ class ClientService {
         return query
     }
 
+    checkUsername(username){
+        let query = this.knex.select('username').from('clientinfo').where('username', username)
+
+        return query
+    }
+
     test(jobid) {
         let query = this.knex('shopperinfo').increment('balance', 100).where('id', 1)
         return query

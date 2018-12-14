@@ -29,17 +29,6 @@
         })    
     })
 
-    $('.repeatpassword').on('blur', function(){
-        if($('.repeatpassword').val() != $('.rawpassword').val()){
-            showValidate($('.repeatpassword'));
-            $('.repeatpassword').parent().removeClass('true-validate');
-        }
-        else {
-            $('.repeatpassword').parent().addClass('true-validate');
-        }
-    })
-
-
     /*==================================================================
     [ Validate ]*/
     var input = $('.validate-input .input100');
@@ -89,6 +78,36 @@
 
         $(thisAlert).removeClass('alert-validate');
     }
+
+    /*==================================================================
+    [ Check User name ]*/
+
+    $('.shopperusername').on('blur', function(){
+        let username = $('.shopperusername').val()
+        $.get( `/shopper/check/${username}`, function( data ) {
+            if (data.length > 0){
+                $('#usernamewarn').show();
+                $('.shopperusername').parent().removeClass('true-validate');
+            } else {
+                $('#usernamewarn').hide();
+                $('.shopperusername').parent().addClass('true-validate');
+            }
+          });
+    })    
+
+    $('.clientusername').on('blur', function(){
+        let username = $('.clientusername').val()
+        $.get( `/client/check/${username}`, function( data ) {
+            if (data.length > 0){
+                $('#usernamewarn').show();
+                $('.clientusername').parent().removeClass('true-validate');
+            } else {
+                $('#usernamewarn').hide();
+                $('.clientusername').parent().addClass('true-validate');
+            }
+          });
+    })    
+
     
 
 
