@@ -112,6 +112,12 @@ class ShopperService {
         return query
     }
 
+    checkUsername(username){
+        let query = this.knex.select('username').from('shopperinfo').where('username', username)
+
+        return query
+    }
+
 }
 
 module.exports = ShopperService;

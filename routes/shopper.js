@@ -289,6 +289,7 @@ router.post('/register', [
 
             if (!errors.isEmpty()) {
                 console.log(errors.array())
+                res.send('Something wrong')
                 // res.render('users/register', { errors: errors.array() })
             } else {
                 let user = req.body;
@@ -493,5 +494,15 @@ router.post('/resetpassword/token/:token', (req, res) => {
 
 })
 // ---------------------- //
+
+// Account check //
+router.get('/check/:username', function (req, res) {
+
+    shopperService.checkUsername(req.params.username).then((result)=>{
+        res.send(result)
+    })
+
+});
+// --------- //
 
 module.exports = router;

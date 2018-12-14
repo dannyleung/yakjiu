@@ -29,66 +29,64 @@
 	<link rel="stylesheet" type="text/css" href="/css/util.css">
 	<link rel="stylesheet" type="text/css" href="/css/main.css">
 	<!--===============================================================================================-->
+
+	<style>
+		.login100-more::before {
+  background: linear-gradient(#32abfca6, #ffffff);
+  background: linear-gradient(bottom, #32abfca6, #ffffff);
+  opacity: 0.8;
+}
+	</style>
 </head>
+
 <body style="background-color: #999999;">
-	
+
 	<div class="limiter">
 		<div class="container-login100">
-			<div class="login100-more" style="background-image: url('images/bg-01.jpg');"></div>
+			<div class="login100-more" style="background-image: url('/img/bg-03.jpg')"></div>
 
 			<div class="wrap-login100 p-l-50 p-r-50 p-t-72 p-b-50">
-				<form class="login100-form validate-form">
+				<form class="login100-form validate-form" action="/client/register" method="post">
 					<span class="login100-form-title p-b-59">
 						Sign Up
 					</span>
 
-					<div class="wrap-input100 validate-input" data-validate="Company Name is required">
-						<span class="label-input100">Company Name</span>
-						<input class="input100" type="text" name="companyname" placeholder="Company Name...">
-						<span class="focus-input100"></span>
-					</div>
-
 					<div class="wrap-input100 validate-input" data-validate="User Name is required">
 						<span class="label-input100">User Name</span>
-						<input class="input100" type="text" name="username" placeholder="User Name...">
+						<input class="input100 clientusername" type="text" name="username" placeholder="User Name...">
 						<span class="focus-input100"></span>
+						<span id="usernamewarn" style="color:red; display:none;">Username has already been taken!</span>
 					</div>
 
-					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+					<div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
 						<span class="label-input100">Email</span>
 						<input class="input100" type="text" name="email" placeholder="Email addess...">
 						<span class="focus-input100"></span>
 					</div>
 
-					<div class="wrap-input100 validate-input" data-validate="Contact Number is required">
-						<span class="label-input100">Contact Number</span>
-						<input class="input100" type="text" name="contactnumber" placeholder="Contact Number...">
-						<span class="focus-input100"></span>
-					</div>
-
 					<div class="wrap-input100 validate-input" data-validate="Address is required">
 						<span class="label-input100">Registered Business Address</span>
-						<input class="input100" type="text" name="address" placeholder="Address...">
+						<input class="input100" type="text" name="billing" placeholder="Address...">
 						<span class="focus-input100"></span>
 					</div>
 
 
 
 					<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-					
+
 					<label><span class="label-input100">Password: </span>
-					  <input name="password" id="password" type="password" placeholder="Enter Password" />
+						<input name="password" id="password" type="password" placeholder="Enter Password" />
 					</label>
 
 
 					<label><span class="label-input100">Repeat Password: </span>
-					  <input type="password" name="repeatpassword" id="confirm_password" placeholder="Re-enter Password"/>
-					  <span id='message'></span>
+						<input type="password" id="confirm_password" placeholder="Re-enter Password" />
+						<span id='message'></span>
 					</label>
 
 					<div class="flex-m w-full p-b-33">
 						<div class="contact100-form-checkbox">
-							<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+							<input class="input-checkbox100" id="ckb1" type="checkbox">
 							<label class="label-checkbox100" for="ckb1">
 								<span class="txt1">
 									I agree to the
@@ -117,7 +115,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<!--===============================================================================================-->
 	<script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
 	<!--===============================================================================================-->
