@@ -5,7 +5,7 @@ class ShopperService {
 
     listindexlist() {
         let query = this.knex.select('id', 'shopname', 'address', 'credit', 'startdate', 'enddate', 'quota', 'taken', 'status').from('shopinfo')
-            .where('status', 'Live')
+            .where('status', 'Live').andWhere('quota', '>', 0)
 
         return query
     }
@@ -108,6 +108,12 @@ class ShopperService {
                     taken: this.knex.raw('array_append(taken, ?)', [shopperid])
                 }
             ).where('id', shopid)
+
+        return query
+    }
+
+    checkUsername(username){
+        let query = this.knex.select('username').from('shopperinfo').where('username', username)
 
         return query
     }

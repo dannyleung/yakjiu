@@ -163,6 +163,13 @@ h6 {
   padding-bottom: 2.5rem;
 }
 
+#contact {
+  background-image: linear-gradient(#ffffff, #a7bcc300);
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
+
 .services-detail {
   background-color: #ffffff
 }

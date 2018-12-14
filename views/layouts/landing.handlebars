@@ -22,8 +22,14 @@
     <!-- Custom CSS -->
     <link href="/css/stylish-portfolio.css" rel="stylesheet">
 
-    
+
     <link rel="icon" href="/logo/webicon.png">
+
+    <style>
+        .clickable {
+    cursor: pointer;
+    }
+    </style>
 </head>
 
 <body id="page-top">
@@ -54,13 +60,14 @@
 
     <!-- Header -->
     <header class="masthead d-flex">
-        <div class="container text-center my-auto">
+        <div class="container text-center my-auto clickable">
             <img src="/logo/logotrans.png" class="img-responsive" style="width: 80%">
             <h1 class="mb-1">Welcome to Yakjiu</h1>
             <h3 class="mb-5">
                 <em>The Mystery Shopping Platform solution for mid-size corporations</em>
             </h3>
-            <a class="btn btn-primary btn-lg js-scroll-trigger" data-toggle="modal" data-target="#login" style="font-size: 1.4em">Sign In</a>
+            <a class="btn btn-primary btn-lg js-scroll-trigger" data-toggle="modal" data-target="#login" style="font-size: 1.4em">Sign
+                In</a>
         </div>
         <div class="overlay"></div>
 
@@ -87,12 +94,11 @@
                                     <div class="tab-pane fade show active text-align form-new" id="home" role="tabpanel"
                                         aria-labelledby="home-tab">
                                         <h3 class="register-heading">Shopper Login</h3>
-                                        <p style="color:white">Don't have a <b>Shopper</b> account? Signup 
+                                        <p style="color:white">Don't have a <b>Shopper</b> account?<a href="/shopper/register"
+                                                class="btnForgetPwd">Signup
+                                                here!</p></a>
 
-                                        {{!-- LINK TO CREATE SHOPPER ACCOUNT --}}
-                                        {{!-- <a href="createShopperAccount" class="btnForgetPwd" value="Login">here!</p></a> --}}
-                                                        
-                                                        
+
                                         <div class="row register-form">
                                             <div class="col-md-12">
                                                 <form method="post" action="/shopper/login">
@@ -108,7 +114,8 @@
                                                         {{!-- <input type="submit" name="LGform1" class="btnContactSubmit"
                                                             value="Login" /> --}}
                                                         <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
-                                                        <a href="ForgetPassword.php" class="btnForgetPwd" value="Login">Forget
+                                                        <a href="#" onclick="popupForgetpassword()" class="btnForgetPwd"
+                                                            value="Login">Forget
                                                             Password?</a>
                                                     </div>
                                                 </form>
@@ -118,10 +125,13 @@
                                     <div class="tab-pane fade show text-align form-new" id="profile" role="tabpanel"
                                         aria-labelledby="profile-tab">
                                         <h3 class="register-heading">Client Login</h3>
-                                        <p style="color:white">Don't have a <b>Client</b> account? Signup
-                                        
-                                        {{!-- LINK TO CREATE CLIENT ACCOUNT --}}
-                                        {{!-- <a href="createClientAccount" class="btnForgetPwd" value="Login">here!</p></a> --}}
+                                        <p style="color:white">Don't have a <b>Client</b> account? <a href="/client/register"
+                                                class="btnForgetPwd">Signup
+                                                here!</p></a>
+
+                                            {{!-- LINK TO CREATE CLIENT ACCOUNT --}}
+                                            {{!-- <a href="createClientAccount" class="btnForgetPwd" value="Login">here!</p></a>
+                                        --}}
                                         <div class="row register-form">
                                             <div class="col-md-12">
                                                 <form method="post" action="/client/login">
@@ -135,8 +145,8 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
-                                                        <a href="ForgetPassword.php" class="btnForgetPwd" value="Login">Forget
-                                                            Password?</a>
+                                                        <p style="color:white;">If client forget password, Please
+                                                            contact our customer support.</p>
                                                     </div>
                                                 </form>
                                             </div>
@@ -147,30 +157,8 @@
                         </div>
                     </div>
 
-                    <!-- shopp login form -->
-                    {{!-- <form id="Login">
-
-                        <div class="form-group">
-
-                            <input type="email" class="form-control" id="inputEmail" placeholder="Email Address">
-
-                        </div>
-
-                        <div class="form-group">
-
-                            <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-
-                        </div>
-                        <div class="forgot">
-                            <a href="reset.html">Forgot password?</a>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Login</button>
-
-                    </form> --}}
-                    <!-- -->
                 </div>
             </div>
-            <!-- -->
 
     </header>
 
@@ -180,8 +168,11 @@
             <div class="row">
                 <div class="col-lg-10 mx-auto">
                     <h2>Mystery Shopping Made Easy with YakJiu</h2>
-                    <p class="lead mb-5">YakJiu has recognized the need a quick and easy solution for SME's (including the small mom & pop stores) to have a quick and easy Mystery Shopping tool - a simple solution without all the bling that other top agencies provide at a high premium entry start-up cost. Here at YakJiu allows the owners / direct managers to create their own mystery shop in less than 10mins.</p>
-                    {{!-- <a class="btn btn-dark btn-xl js-scroll-trigger" href="#services">What We Offer</a> --}}
+                    <p class="lead mb-5">YakJiu has recognized the need a quick and easy solution for SME's (including
+                        the small mom & pop stores) to have a quick and easy Mystery Shopping tool - a simple solution
+                        without all the bling that other top agencies provide at a high premium entry start-up cost.
+                        Here at YakJiu allows the owners / direct managers to create their own mystery shop in less
+                        than 10mins.</p>
                 </div>
             </div>
         </div>
@@ -191,7 +182,6 @@
     <section class="content-section bg-primary text-white text-center" id="services">
         <div class="container">
             <div class="content-section-heading">
-                {{!-- <h3 class="text-secondary mb-0">Services</h3> --}}
                 <h2 class="mb-5">What We Offer</h2>
             </div>
             <div class="row">
@@ -239,8 +229,8 @@
     <section class="callout" id="callout">
         <div class="container text-center">
             <h2 class="mx-auto mb-5">Create your <em>Free</em>
-                 YakJiu account now!</h2>
-            <a class="btn btn-danger btn-lg" href="#">Become a Shopper!</a>
+                YakJiu account now!</h2>
+            <a class="btn btn-danger btn-lg" href="/shopper/register">Become a Shopper!</a>
             <a class="btn btn-info btn-lg mx-1" href="#">Become a Client!</a>
         </div>
     </section>
@@ -248,110 +238,101 @@
     <!-- Callout -->
     <section class="services-detail" id="mobility">
         <div class="container text-center">
+            <div class="container">
+                <div class="col-lg-12 ">
+                    <div class="row">
+                        <!-- 1ST COLUMN (MOBILITY) -->
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <h1>Mobility</h1>
+                            </div>
+                        </div>
 
+                        <!-- 2ND COLUMN (MOBILITY) -->
+                        <div class="col-sm-8">
+                            <div class="form-group">
+                                <ul>
+                                    <li>Immediate access to your progress & reports</li>
+                                    <li>Functionality on your PC or smartphone</li>
+                                    <li>Immediate notification of survey completion status</li><br><br><br>
+                                </ul>
+                            </div>
+                        </div>
 
+                        <!-- 2ND COLUMN (FLEXIBILTY) -->
+                        <div class="col-sm-8">
+                            <div class="form-group">
+                                <ul>
+                                    <li>Create your own survey for shopper to follow</li>
+                                    <li>Make your own unique campaigns for multiple surveys</li>
+                                    <li>Set expiration date for survey to be completed</li><br><br><br>
+                                </ul>
+                            </div>
+                        </div>
 
+                        <!-- 1ST COLUMN (FLEXIBILTY) -->
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <h1>Flexibility</h1>
+                            </div>
+                        </div>
 
-<div class="container">
-    <div class="col-lg-12 ">
-        <div class="row">
-            <!-- 1ST COLUMN (MOBILITY) -->
-            <div class="col-sm-4">
-                <div class="form-group">
-                    <h1>Mobility</h1>
+                        <!-- 1ST COLUMN (FAVORITED) -->
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <h1>Favorited</h1>
+                            </div>
+                        </div>
+
+                        <!-- 2ND COLUMN (FAVORITED) -->
+                        <div class="col-sm-8">
+                            <div class="form-group">
+                                <ul>
+                                    <li>100s of new clients every month</li>
+                                    <li>Regonized as top 10 most popular apps for 2018</li>
+                                    <li>Angel Investors looking to inject over (USD)$500 million</li><br><br><br>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- 2ND COLUMN (CUSTOMIZE) -->
+                        <div class="col-sm-8">
+                            <div class="form-group">
+                                <ul>
+                                    <li>Refine & Define exactly what information you wish to attain</li>
+                                    <li>Flexible packages available depending on size of survey you wish to create</li>
+                                    <li>Mobile (Andoird & iOS) app coming soon!</li><br><br><br>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- 1ST COLUMN (CUSTOMIZE) -->
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <h1>Customize</h1>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <!-- 2ND COLUMN (MOBILITY) -->
-            <div class="col-sm-8">
-                <div class="form-group">
-                    <ul>
-                        <li>Immediate access to your progress & reports</li>
-                        <li>Functionality on your PC or smartphone</li>
-                        <li>Immediate notification of survey completion status</li>
-                  </ul>
-                </div>
-            </div>
-
-            <!-- 2ND COLUMN (FLEXIBILTY) -->
-            <div class="col-sm-8">
-                <div class="form-group">
-                    <ul>
-                        <li>Create your own survey for shopper to follow</li>
-                        <li>Make your own unique campaigns for multiple surveys</li>
-                        <li>Set expiration date for survey to be completed</li>
-                  </ul>
-                </div>
-            </div>
-
-             <!-- 1ST COLUMN (FLEXIBILTY) -->
-            <div class="col-sm-4">
-                <div class="form-group">
-                    <h1>Flexibility</h1>
-                </div>
-            </div>
-
-
-             <!-- 1ST COLUMN (FAVORITED) -->
-            <div class="col-sm-4">
-                <div class="form-group">
-                    <h1>Favorited</h1>
-                </div>
-            </div>
-
-            <!-- 2ND COLUMN (FAVORITED) -->
-            <div class="col-sm-8">
-                <div class="form-group">
-                    <ul>
-                        <li>How to make $ from YakJiu?</li>
-                        <li>How to use YakJiu?</li>
-                        <li>How to become a professional YakJiu expert?</li>
-                  </ul>
-                </div>
-            </div>
-
-
-
-            <!-- 2ND COLUMN (CUSTOMIZE) -->
-            <div class="col-sm-8">
-                <div class="form-group">
-                    <ul>
-                        <li>How to make $ from YakJiu?</li>
-                        <li>How to use YakJiu?</li>
-                        <li>How to become a professional YakJiu expert?</li>
-                  </ul>
-                </div>
-            </div>
-
-             <!-- 1ST COLUMN (CUSTOMIZE) -->
-            <div class="col-sm-4">
-                <div class="form-group">
-                    <h1>Customize</h1>
-                </div>
-            </div>
-
-
-
-
-
-
-        </div>    
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-        </div>
     </section>
 
+    <!-- Contact -->
+    <section class="contact" id="contact">
+        <div class="row">
+            <div class="col-md-2 ml-md-auto">
+                <div class="form-group text-left">
+                    <h1>Contact</h1>
+                    YakJiu Enterprise Limited<br>
+                    Penthouse Suite, IFC, Central, Hong Kong<br>
+                    Tel: +852 8888 8888<br>
+                    Email: <a href="mailto:info@yakjiu.com">info@yakjiu.com</a><br>
+                    Customer Support: <a href="mailto:support@yakjiu.com">support@yakjiu.com</a><br>
+                </div>
+            </div>
+            <div class="col-md-0 ml-md-auto"> </div>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer class="footer text-center">
@@ -373,7 +354,9 @@
                     </a>
                 </li>
             </ul>
-            <p class="text-muted small mb-0">Copyright &copy; Yakjiu.com 2018</p>
+            <p class="text-muted small mb-0">Copyright &copy; Yakjiu.com 2018<br>
+                Disclaimer</p>
+
         </div>
     </footer>
 
@@ -394,12 +377,13 @@
     <!-- login modal pop -->
     <script>
         $(document).ready(function () {
-
             if (window.location.href.indexOf('#login') != -1) {
                 $('#login').modal('show');
             }
-
         });
+        function popupForgetpassword() {
+            var jobWindow = window.open(`/shopper/forgetpassword`, "forgetpasswordwindow", "width=400,height=500,status=0,menubar=0,directories=0,top=0,left=10");
+        }
     </script>
 
 </body>

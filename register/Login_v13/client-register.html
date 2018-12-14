@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Login V13</title>
+	<title>YakJiu</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -71,17 +71,19 @@
 						<span class="focus-input100"></span>
 					</div>
 
-					<div class="wrap-input100 validate-input" data-validate = "Password is required">
-						<span class="label-input100">Password</span>
-						<input class="input100" type="text" name="pass" placeholder="*************">
-						<span class="focus-input100"></span>
-					</div>
 
-					<div class="wrap-input100 validate-input" data-validate = "Repeat Password is required">
-						<span class="label-input100">Repeat Password</span>
-						<input class="input100" type="text" name="repeat-pass" placeholder="*************">
-						<span class="focus-input100"></span>
-					</div>
+
+					<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+					
+					<label><span class="label-input100">Password: </span>
+					  <input name="password" id="password" type="password" placeholder="Enter Password" />
+					</label>
+
+
+					<label><span class="label-input100">Repeat Password: </span>
+					  <input type="password" name="repeatpassword" id="confirm_password" placeholder="Re-enter Password"/>
+					  <span id='message'></span>
+					</label>
 
 					<div class="flex-m w-full p-b-33">
 						<div class="contact100-form-checkbox">
@@ -95,8 +97,6 @@
 								</span>
 							</label>
 						</div>
-
-						
 					</div>
 
 					<div class="container-login100-form-btn">

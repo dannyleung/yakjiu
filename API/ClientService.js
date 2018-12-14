@@ -47,6 +47,8 @@ class ClientService {
             let totalCredit = input.credit * input.quota
             //
 
+            input.taken = [];
+
             await trx("shopinfo").insert(input);
             await trx('clientinfo').decrement('credit', totalCredit).where('id', input._clientid);
 
@@ -124,6 +126,12 @@ class ClientService {
         .leftJoin('shopperinfo', 'jobinfo._shopperid', 'shopperinfo.id')
         .leftJoin('shopinfo', 'jobinfo._shopid', 'shopinfo.id')
         
+        return query
+    }
+
+    checkUsername(username){
+        let query = this.knex.select('username').from('clientinfo').where('username', username)
+
         return query
     }
 

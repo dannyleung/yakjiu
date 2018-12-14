@@ -95,7 +95,7 @@ router.delete('/shop/:id', authCheck, (req, res) => {
 
         if (result.length < 1 || req.user.id != result[0]._clientid || req.user.credit == undefined) {
             res.send('Dont be evil')
-        } else if(result[0].taken != null){
+        } else if(result[0].taken.length > 0 || result[0].taken == null){
             res.status(500)        // HTTP status 404: NotFound
             .send('already assigned');
         } else {
@@ -115,7 +115,7 @@ router.delete('/shop/:id', authCheck, (req, res) => {
 
 // Success page for testing //
 router.get('/success', (req, res) => {
-    res.send('Client Login OK!')
+    res.render('empty',{layout:'redirect'})
 })
 // ----------------------- //
 
@@ -137,6 +137,7 @@ router.post('/register', [
 
             if (!errors.isEmpty()) {
                 console.log(errors.array())
+                res.send('Error, cant reg!')
                 // res.render('users/register', { errors: errors.array() })
             } else {
                 let user = req.body;
@@ -163,7 +164,7 @@ router.post('/register', [
                                 knex('clientinfo').insert(user).then((result) =>
                                     console.log(req.body) //show stored result
                                 )
-                                    .then((result) => { res.send('hi') })
+                                    .then((result) => { res.redirect('/client/success') })
                                     .catch((err => {
                                         console.log(err);
                                         res.send(err)
@@ -186,6 +187,7 @@ router.post('/newshop', [
     check('quota', 'invalid quota').isInt({ min: 1, max: 20 }),
     check('credit', 'invalid credit').isInt({ min: 1, max: 100 })], function (req, res) {
 
+        //Req Body preRender//
         const errors = validationResult(req);
         req.body._clientid = req.user.id
         req.body.question2 = [req.body.question2, req.body.question2a, req.body.question2b, req.body.question2c, req.body.question2d]
@@ -198,6 +200,8 @@ router.post('/newshop', [
         delete req.body.question3b;
         delete req.body.question3c;
         delete req.body.question3d;
+        //---------------------//
+
         console.log(req.body)
 
         if (!errors.isEmpty()) {
@@ -330,6 +334,18 @@ router.get('/jobdetail/:id', authCheck, (req, res) => {
 })
 // -------------------- //
 
+// Purchase Credit //
+router.get('/purchasecredit', authCheck, (req,res)=>{
+    res.render('purchasecredit', { currentCredit: req.user.credit })
+})
+// -------------- //
+
+// Shopper registrer page //
+router.get('/register', (req,res)=>{
+    res.render('empty',{layout: 'clientsignup'})
+})
+// ------------------- //
+
 // Logout page //
 router.get('/logout', function (req, res) {
     req.logout();
@@ -337,6 +353,15 @@ router.get('/logout', function (req, res) {
 });
 // --------- //
 
+// Account check //
+router.get('/check/:username', function (req, res) {
+
+    clientService.checkUsername(req.params.username).then((result)=>{
+        res.send(result)
+    })
+
+});
+// --------- //
 
 // No this page (must place at bottom) //
 router.get('*', authCheck, (req, res) => {
